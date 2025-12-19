@@ -1,14 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect width="100" height="100" rx="18" fill="#000000"/>
+  <defs>
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e0e0e0;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="20" fill="rgba(32,32,32,0.9)"/>
+  <rect width="100" height="100" rx="20" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
   <text
     x="50"
     y="58"
     text-anchor="middle"
     dominant-baseline="middle"
-    font-size="48"
+    font-size="52"
     font-family="system-ui, -apple-system, BlinkMacSystemFont, sans-serif"
-    font-weight="600"
-    fill="#ffffff"
+    font-weight="700"
+    letter-spacing="-1"
+    fill="url(#textGradient)"
   >
     SZ
   </text>
