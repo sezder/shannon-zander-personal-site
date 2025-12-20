@@ -5,7 +5,11 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'section-bg': '#F9F9F7',
+      },
+    },
   },
   plugins: [],
 }

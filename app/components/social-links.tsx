@@ -23,7 +23,7 @@ function WellfoundIcon() {
 
 export function SocialLinks() {
   return (
-    <div className="fixed top-28 right-4 lg:right-8 z-10 flex flex-col gap-3">
+    <div className="fixed top-28 sm:right-2 right-4lg:right-8 z-10 flex flex-col gap-3">
       <a
         href="https://github.com/sezder"
         target="_blank"

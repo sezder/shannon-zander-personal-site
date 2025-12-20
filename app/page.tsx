@@ -22,8 +22,8 @@ function ExperienceItem({
   date: string 
 }) {
   return (
-    <div className="bg-white dark:bg-neutral-900 rounded-lg p-4 border-b border-neutral-200 dark:border-neutral-800">
-      <div className="flex items-start gap-3">
+    <div className="bg-white dark:bg-neutral-900 rounded-lg p-4 border-b border-neutral-200 dark:border-neutral-800 h-20 flex items-center">
+      <div className="flex items-center gap-3 w-full">
         <CompanyIcon>{icon}</CompanyIcon>
         <div className="flex-1 min-w-0">
           <p className="text-sm text-neutral-900 dark:text-neutral-100">
@@ -50,8 +50,8 @@ function AwardItem({
   date: string 
 }) {
   return (
-    <div className="bg-white dark:bg-neutral-900 rounded-lg p-4 border-b border-neutral-200 dark:border-neutral-800">
-      <div className="flex items-start gap-3">
+    <div className="bg-white dark:bg-neutral-900 rounded-lg p-4 border-b border-neutral-200 dark:border-neutral-800 h-20 flex items-center">
+      <div className="flex items-center gap-3 w-full">
         <CompanyIcon>{icon}</CompanyIcon>
         <div className="flex-1 min-w-0">
           <p className="text-sm text-neutral-900 dark:text-neutral-100">
@@ -68,22 +68,23 @@ function AwardItem({
 
 export default function Page() {
   return (
-    <section>
-      <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
-        Shannon Zander
-      </h1>
-      <p className="mb-4">
-        I'm a software engineer focused on <strong>billing systems, data migrations, and production safety at scale</strong>.
-      </p>
-      <p className="mb-4">
-        Currently, I work on <strong>subscriptions and payments infrastructure</strong>, where I own revenue-critical systems, large historical data migrations, and cross-database schema evolution under live production traffic.
-      </p>
+    <>
+      <section className="px-6 sm:px-12 md:px-16 lg:px-[20vw] xl:px-[20vw] pr-14 sm:pr-20 md:pr-0">
+        <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
+          Shannon Zander
+        </h1>
+        <p className="mb-4">
+          I'm a software engineer focused on <strong>billing systems, data migrations, and production safety at scale</strong>.
+        </p>
+        <p className="mb-4">
+          Currently, I work on <strong>subscriptions and payments infrastructure</strong>, where I own revenue-critical systems, large historical data migrations, and cross-database schema evolution under live production traffic.
+        </p>
+      </section>
       
-      <div className="my-8 relative left-1/2 -translate-x-1/2 w-screen">
-        <div className="bg-[#F9F9F7] dark:bg-neutral-950 rounded-lg py-6 md:py-8">
-          <div className=" max-w-xl mx-auto">
-          <div className="grid grid-cols-1 gap-8">
-            <div>
+      <section className="w-screen">
+        <div className="bg-section-bg dark:bg-neutral-950 py-6 md:py-8">
+          <div className="px-6 sm:px-12 md:px-16 lg:px-[20vw] xl:px-[20vw] grid grid-cols-1 [1085px]:grid-cols-2 gap-8">
+            <div className="flex flex-col justify-center">
               <h2 className="text-2xl font-semibold mb-6 text-neutral-900 dark:text-neutral-100">
                 Working experience
               </h2>
@@ -133,7 +134,7 @@ export default function Page() {
               </div>
             </div>
             
-            <div>
+            <div className="flex flex-col justify-center">
               <h2 className="text-2xl font-semibold mb-6 text-neutral-900 dark:text-neutral-100">
                 Awards & Recognition
               </h2>
@@ -148,18 +149,45 @@ export default function Page() {
                       className="object-contain w-full h-full"
                     />
                   }
-                  title="Outstanding Leadership Award"
+                  title="Honors in Major Study (Philosophy & Classics)"
                   organization="Whitman College"
                   date="2019"
+                />
+                <AwardItem
+                  icon={
+                    <Image
+                      src="/whitman-college-seal.png"
+                      alt="Whitman College seal"
+                      width={32}
+                      height={32}
+                      className="object-contain w-full h-full"
+                    />
+                  }
+                  title="Louis B. Perry Research Grant"
+                  organization="Whitman College"
+                  date="2018"
+                />
+                <AwardItem
+                  icon={
+                    <Image
+                      src="/aswc-logo.png"
+                      alt="ASWC logo"
+                      width={32}
+                      height={32}
+                      className="object-contain w-full h-full"
+                    />
+                  }
+                  title="Outstanding Leadership Award"
+                  organization="Associated Students of Whitman College"
+                  date="2016"
                 />
               </div>
             </div>
           </div>
-          </div>
         </div>
-      </div>
+      </section>
 
-      <div className="my-8">
+      <section className="px-6 sm:px-12 md:px-16 lg:px-[20vw] xl:px-[20vw] pr-14 sm:pr-20 md:pr-0">
         <h2 className="mb-6 text-xl font-semibold tracking-tight">Skills</h2>
         <div className="space-y-6">
           <div>
@@ -208,7 +236,7 @@ export default function Page() {
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }

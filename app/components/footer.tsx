@@ -17,7 +17,7 @@ function ArrowIcon() {
 
 export default function Footer() {
   return (
-    <footer className="mb-16">
+    <footer className="mb-16 px-6 sm:px-12 md:px-16 lg:px-[20vw] xl:px-[20vw] pr-14 sm:pr-20 md:pr-0">
       <p className="mt-8 text-neutral-600 dark:text-neutral-300">
         © {new Date().getFullYear()} Shannon Zander
       </p>
