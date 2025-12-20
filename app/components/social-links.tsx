@@ -28,7 +28,7 @@ export function SocialLinks() {
         href="https://github.com/sezder"
         target="_blank"
         rel="noopener noreferrer"
-        className="w-10 h-10 rounded-full border border-neutral-300 dark:border-neutral-700 flex items-center justify-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
+        className="w-10 h-10 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex items-center justify-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
         aria-label="GitHub"
       >
         <FontAwesomeIcon
@@ -40,14 +40,14 @@ export function SocialLinks() {
         href="https://wellfound.com/u/shannon-zander"
         target="_blank"
         rel="noopener noreferrer"
-        className="w-10 h-10 rounded-full border border-neutral-300 dark:border-neutral-700 flex items-center justify-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
+        className="w-10 h-10 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex items-center justify-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
         aria-label="Wellfound"
       >
         <WellfoundIcon />
       </a>
       <a
         href="mailto:shannon.e.zander@gmail.com"
-        className="w-10 h-10 rounded-full border border-neutral-300 dark:border-neutral-700 flex items-center justify-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
+        className="w-10 h-10 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex items-center justify-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
         aria-label="Email"
       >
         <FontAwesomeIcon
