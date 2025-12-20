@@ -54,8 +54,8 @@ export default function RootLayout({
         GeistMono.variable
       )}
     >
-      <body className="antialiased mt-8">
-        <main className="mt-6 flex flex-col">
+      <body className="antialiased mt-8 flex flex-col min-h-screen">
+        <main className="mt-6 flex flex-col flex-1 pb-20 md:pb-0">
           <Navbar />
           <SocialLinks />
           {children}

@@ -69,7 +69,7 @@ function AwardItem({
 export default function Page() {
   return (
     <>
-      <section className="px-6 sm:px-12 md:px-16 lg:px-[20vw] xl:px-[20vw] pr-14 sm:pr-20 md:pr-0">
+      <section className="px-10 sm:px-12 md:px-16 lg:px-[20vw] xl:px-[20vw]">
         <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
           Shannon Zander
         </h1>
@@ -81,9 +81,9 @@ export default function Page() {
         </p>
       </section>
       
-      <section className="w-screen">
+      <section className="w-screen mt-8">
         <div className="bg-section-bg dark:bg-neutral-950 py-6 md:py-8">
-          <div className="px-6 sm:px-12 md:px-16 lg:px-[20vw] xl:px-[20vw] grid grid-cols-1 [1085px]:grid-cols-2 gap-8">
+          <div className="px-10 sm:px-12 md:px-16 lg:px-[20vw] xl:px-[20vw] grid grid-cols-1 [1085px]:grid-cols-2 gap-8">
             <div className="flex flex-col justify-center">
               <h2 className="text-2xl font-semibold mb-6 text-neutral-900 dark:text-neutral-100">
                 Working experience
@@ -187,7 +187,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="px-6 sm:px-12 md:px-16 lg:px-[20vw] xl:px-[20vw] pr-14 sm:pr-20 md:pr-0">
+      <section className="mt-8 px-10 sm:px-12 md:px-16 lg:px-[20vw] xl:px-[20vw]">
         <h2 className="mb-6 text-xl font-semibold tracking-tight">Skills</h2>
         <div className="space-y-6">
           <div>
