@@ -83,7 +83,7 @@ export default function Page() {
       
       <section className="w-screen mt-8">
         <div className="bg-section-bg dark:bg-neutral-950 py-6 md:py-8">
-          <div className="px-10 sm:px-12 md:px-16 lg:px-[20vw] xl:px-[20vw] grid grid-cols-1 [1085px]:grid-cols-2 gap-8">
+          <div className="px-10 sm:px-12 md:px-16 lg:px-[20vw] xl:px-[20vw] grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="flex flex-col justify-center">
               <h2 className="text-2xl font-semibold mb-6 text-neutral-900 dark:text-neutral-100">
                 Working experience
@@ -184,55 +184,56 @@ export default function Page() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section className="mt-8 px-10 sm:px-12 md:px-16 lg:px-[20vw] xl:px-[20vw]">
-        <h2 className="mb-6 text-xl font-semibold tracking-tight">Skills</h2>
-        <div className="space-y-6">
-          <div>
-            <h3 className="mb-3 text-sm font-semibold text-neutral-700 dark:text-neutral-300 uppercase tracking-wide">
-              Languages
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {['TypeScript', 'SQL', 'React', 'GraphQL (Relay)'].map((skill) => (
-                <span
-                  key={skill}
-                  className="px-3 py-1.5 text-sm font-medium text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div>
-            <h3 className="mb-3 text-sm font-semibold text-neutral-700 dark:text-neutral-300 uppercase tracking-wide">
-              Systems
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {['GCP', 'Terraform', 'Cloud SQL', 'BigQuery'].map((skill) => (
-                <span
-                  key={skill}
-                  className="px-3 py-1.5 text-sm font-medium text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div>
-            <h3 className="mb-3 text-sm font-semibold text-neutral-700 dark:text-neutral-300 uppercase tracking-wide">
-              Domains
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {['Stripe Billing', 'High-volume Production Data Migrations'].map((skill) => (
-                <span
-                  key={skill}
-                  className="px-3 py-1.5 text-sm font-medium text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700"
-                >
-                  {skill}
-                </span>
-              ))}
+          <div className="mt-8 px-10 sm:px-12 md:px-16 lg:px-[20vw] xl:px-[20vw]">
+            <div className="bg-white dark:bg-neutral-900 rounded-lg p-6">
+              <h2 className="mb-6 text-xl font-semibold tracking-tight">Skills</h2>
+              <div className="space-y-6">
+                <div>
+                  <h3 className="mb-3 text-sm font-semibold text-neutral-700 dark:text-neutral-300 uppercase tracking-wide">
+                    Languages
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {['TypeScript', 'SQL', 'React', 'GraphQL (Relay)'].map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-3 py-1.5 text-sm font-medium text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h3 className="mb-3 text-sm font-semibold text-neutral-700 dark:text-neutral-300 uppercase tracking-wide">
+                    Systems
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {['GCP', 'Terraform', 'Cloud SQL', 'BigQuery'].map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-3 py-1.5 text-sm font-medium text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h3 className="mb-3 text-sm font-semibold text-neutral-700 dark:text-neutral-300 uppercase tracking-wide">
+                    Domains
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {['Stripe Billing', 'High-volume Production Data Migrations'].map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-3 py-1.5 text-sm font-medium text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
