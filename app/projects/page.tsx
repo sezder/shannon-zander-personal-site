@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { SectionContainer } from '../components/section-container'
 
 function ChevronIcon({ isOpen }: { isOpen: boolean }) {
   return (
@@ -133,20 +134,22 @@ export default function ProjectsPage() {
   ]
 
   return (
-    <section className="px-10 sm:px-12 md:px-16 lg:px-[20vw] xl:px-[20vw]">
-      <h1 className="mb-8 text-2xl font-semibold tracking-tighter">Projects</h1>
-      <div className="space-y-4">
-        {projects.map((project, index) => (
-          <ProjectSection
-            key={index}
-            title={project.title}
-            isOpen={openSections.has(index)}
-            onToggle={() => toggleSection(index)}
-          >
-            {project.content}
-          </ProjectSection>
-        ))}
-      </div>
+    <section>
+      <SectionContainer>
+        <h1 className="mb-8 text-2xl font-semibold tracking-tighter">Projects</h1>
+        <div className="space-y-4">
+          {projects.map((project, index) => (
+            <ProjectSection
+              key={index}
+              title={project.title}
+              isOpen={openSections.has(index)}
+              onToggle={() => toggleSection(index)}
+            >
+              {project.content}
+            </ProjectSection>
+          ))}
+        </div>
+      </SectionContainer>
     </section>
   )
 }

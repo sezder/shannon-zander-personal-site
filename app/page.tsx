@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { SectionContainer } from './components/section-container'
 
 function CompanyIcon({ children }: { children: React.ReactNode }) {
   return (
@@ -69,21 +70,23 @@ function AwardItem({
 export default function Page() {
   return (
     <>
-      <section className="px-10 sm:px-12 md:px-16 lg:px-[20vw] xl:px-[20vw]">
-        <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
-          Shannon Zander
-        </h1>
-        <p className="mb-4">
-          I'm a software engineer focused on <strong>billing systems, data migrations, and production safety at scale</strong>.
-        </p>
-        <p className="mb-4">
-          Currently, I work on <strong>subscriptions and payments infrastructure</strong>, where I own revenue-critical systems, large historical data migrations, and cross-database schema evolution under live production traffic.
-        </p>
+      <section>
+        <SectionContainer>
+          <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
+            Shannon Zander
+          </h1>
+          <p className="mb-4">
+            I'm a software engineer focused on <strong>billing systems, data migrations, and production safety at scale</strong>.
+          </p>
+          <p className="mb-4">
+            Currently, I work on <strong>subscriptions and payments infrastructure</strong>, where I own revenue-critical systems, large historical data migrations, and cross-database schema evolution under live production traffic.
+          </p>
+        </SectionContainer>
       </section>
       
       <section className="w-screen mt-8">
         <div className="bg-section-bg dark:bg-neutral-950 py-6 md:py-8">
-          <div className="px-10 sm:px-12 md:px-16 lg:px-[20vw] xl:px-[20vw] grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <SectionContainer className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="flex flex-col justify-center">
               <h2 className="text-2xl font-semibold mb-6 text-neutral-900 dark:text-neutral-100">
                 Working experience
@@ -183,8 +186,8 @@ export default function Page() {
                 />
               </div>
             </div>
-          </div>
-          <div className="mt-8 px-10 sm:px-12 md:px-16 lg:px-[20vw] xl:px-[20vw]">
+          </SectionContainer>
+          <SectionContainer className="mt-8">
             <div className="bg-white dark:bg-neutral-900 rounded-lg p-6">
               <h2 className="mb-6 text-xl font-semibold tracking-tight">Skills</h2>
               <div className="space-y-6">
@@ -235,7 +238,7 @@ export default function Page() {
                 </div>
               </div>
             </div>
-          </div>
+          </SectionContainer>
         </div>
       </section>
     </>

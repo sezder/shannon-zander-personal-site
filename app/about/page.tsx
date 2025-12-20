@@ -1,9 +1,12 @@
+import { SectionContainer } from '../components/section-container'
+
 export default function About() {
   return (
     <section>
-      <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
-        About
-      </h1>
+      <SectionContainer>
+        <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
+          About
+        </h1>
       <p className="mb-4">
         Before engineering, I studied <strong>Philosophy and Classics</strong>, which strongly shapes how I approach system design, tradeoffs, and correctness. I've also lived and worked abroad, including serving as an <strong>English Educator and Teacher Trainer</strong> in South Africa.
       </p>
@@ -35,6 +38,7 @@ export default function About() {
           </ul>
         </div>
       </div>
+      </SectionContainer>
     </section>
   )
 }

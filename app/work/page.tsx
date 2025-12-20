@@ -1,9 +1,12 @@
+import { SectionContainer } from '../components/section-container'
+
 export default function Work() {
   return (
     <section>
-      <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
-        Experience
-      </h1>
+      <SectionContainer>
+        <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
+          Experience
+        </h1>
       
       <div className="mb-8">
         <div className="mb-2">
@@ -83,6 +86,7 @@ export default function Work() {
           </p>
         </div>
       </div>
+      </SectionContainer>
     </section>
   )
 }

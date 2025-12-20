@@ -1,9 +1,12 @@
+import { SectionContainer } from '../components/section-container'
+
 export default function Contact() {
   return (
     <section>
-      <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
-        Contact
-      </h1>
+      <SectionContainer>
+        <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
+          Contact
+        </h1>
       <div className="space-y-4">
         <div>
           <h2 className="mb-2 text-lg font-semibold">Email</h2>
@@ -40,6 +43,7 @@ export default function Contact() {
           </ul>
         </div>
       </div>
+      </SectionContainer>
     </section>
   )
 }
