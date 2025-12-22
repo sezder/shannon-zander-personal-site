@@ -187,107 +187,201 @@ export default function ProjectsPage() {
       ),
     },
     {
-      title: 'History Table Migration',
+      title: 'Production-Safe Large-Scale Data Migration (≈693M Rows)',
       content: (
         <div className="space-y-4">
           <div>
             <h4 className="text-xl font-semibold mb-3 mt-4">Overview</h4>
             <p>
-              Migrated historical data from legacy systems to a new normalized schema while maintaining data integrity and zero downtime.
+              I designed and executed a <strong>zero-downtime, production-safe migration</strong> to consolidate two year-partitioned transaction tables (<code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">expenses_2022</code>, <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">expenses_2023</code>) into a single archive table (<strong>~693M rows total</strong>).
             </p>
             <p>
-              This project involved migrating millions of records across multiple database tables, ensuring referential integrity and implementing rollback strategies.
+              Rather than a one-off script, the migration was built as a <strong>self-regulating system</strong>: <strong>resumable</strong>, <strong>adaptive under load</strong>, <strong>observable in real time</strong>, and capable of <strong>safely shutting itself down</strong> if it threatened production stability. The system was designed to <strong>tolerate partial runs, retries, and duplicate data</strong> without requiring manual intervention.
             </p>
           </div>
 
           <div>
-            <h4 className="text-xl font-semibold mb-3 mt-4">Migration Strategy</h4>
-            <p>
-              The migration used a phased approach with dual-write patterns to ensure zero downtime. Here's an example of the migration script structure:
-            </p>
-            <CodeBlock
-              language="typescript"
-              filename="migration.ts"
-              code={`async function migrateHistoryTable(
-  sourceTable: string,
-  targetTable: string,
-  batchSize: number = 10000
-): Promise<void> {
-  let offset = 0
-  let hasMore = true
+            <h4 className="text-xl font-semibold mb-3 mt-4">Key Design Decisions</h4>
+            
+            <div className="space-y-4">
+              <div>
+                <h5 className="text-base font-semibold mt-4 mb-2">Colocated execution (VM + database)</h5>
+                <p>
+                  The migration ran on a <strong>dedicated VM</strong> deployed in the same <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">GCP</code> region and zone as the <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">CloudSQL</code> instance. This was a <strong>deliberate colocation choice</strong> to:
+                </p>
+                <ul className="list-disc list-inside space-y-1 ml-4 mt-2">
+                  <li><strong>minimize network latency</strong></li>
+                  <li><strong>avoid cross-zone egress costs</strong></li>
+                  <li><strong>maximize sustained throughput</strong> for long-running batch operations</li>
+                </ul>
+              </div>
 
-  while (hasMore) {
-    // Fetch batch of records
-    const batch = await db.query(
-      \`SELECT * FROM \${sourceTable} 
-       ORDER BY id 
-       LIMIT \${batchSize} OFFSET \${offset}\`
-    )
-
-    if (batch.length === 0) {
-      hasMore = false
-      break
-    }
-
-    // Transform and validate data
-    const transformed = batch.map(transformLegacyRecord)
-    const validated = await validateRecords(transformed)
-
-    // Dual-write: write to both old and new tables
-    await db.transaction(async (tx) => {
-      await tx.insert(targetTable, validated)
-      // Keep source table in sync during migration
-      await tx.update(sourceTable, { migrated: true }, { id: batch.map(r => r.id) })
-    })
-
-    offset += batchSize
-    console.log(\`Migrated \${offset} records\`)
-  }
-
-  // Verify data integrity
-  await verifyMigrationIntegrity(sourceTable, targetTable)
+              <div>
+                <h5 className="text-base font-semibold mt-4 mb-2">Cursor-based pagination (date-driven, monotonic)</h5>
+                <p>
+                  Instead of <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">OFFSET</code> pagination or repeated <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">COUNT</code> queries (which degrade badly at scale), the migration uses a <strong>monotonic, date-based cursor</strong>. Completion is determined by <strong>exhausting the source cursor</strong>, not by matching row counts.
+                </p>
+                <p>
+                  This avoids <strong>full table scans</strong> and keeps <strong>batch performance stable</strong> as the dataset grows.
+                </p>
+                <CodeBlock
+                  language="sql"
+                  filename="cursor_pagination.sql"
+                  code={`-- cursor-based pagination
+SELECT date
+FROM expenses_2023 USE INDEX (date_index)
+WHERE date > :lastDate
+ORDER BY date ASC, transaction_id ASC
+LIMIT :batchSize;`}
+                />
+                <p className="mt-3">
+                  To prevent silent infinite loops, the system explicitly detects <strong>cursor stagnation</strong> and fails fast:
+                </p>
+                <CodeBlock
+                  language="typescript"
+                  filename="cursor_stagnation.ts"
+                  code={`const upperBound = result[result.length - 1]?.date;
+if (upperBound === lastDate) {
+  throw new Error('Cursor stagnation detected – aborting to prevent infinite loop');
 }`}
-            />
-          </div>
+                />
+                <p className="mt-3">
+                  <strong>Failing fast here is intentional</strong> and safer than continuing indefinitely.
+                </p>
+              </div>
 
-          <div>
-            <h4 className="text-xl font-semibold mb-3 mt-4">Data Integrity Checks</h4>
-            <p>
-              Implemented comprehensive validation to ensure referential integrity throughout the migration:
-            </p>
-            <CodeBlock
-              language="sql"
-              filename="integrity_check.sql"
-              code={`-- Verify record counts match
-SELECT 
-  (SELECT COUNT(*) FROM legacy_history) as legacy_count,
-  (SELECT COUNT(*) FROM new_history) as new_count,
-  (SELECT COUNT(*) FROM legacy_history) - (SELECT COUNT(*) FROM new_history) as difference;
+              <div>
+                <h5 className="text-base font-semibold mt-4 mb-2">Idempotent, resume-safe writes</h5>
+                <p>
+                  All batch inserts use <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">INSERT IGNORE</code>, enabling <strong>safe re-runs</strong> and <strong>mid-batch resumes</strong> without risking duplicate data or manual cleanup. Duplicates are <strong>expected due to resumability and prior partial runs</strong>, and are handled intentionally.
+                </p>
+                <CodeBlock
+                  language="sql"
+                  filename="idempotent_insert.sql"
+                  code={`INSERT IGNORE INTO expenses_combined_archive (...)
+SELECT ...
+FROM expenses_2022
+WHERE date > :lastDate AND date <= :upperBound
+ORDER BY date ASC, transaction_id ASC;`}
+                />
+                <p className="mt-3">
+                  This design guarantees:
+                </p>
+                <ul className="list-disc list-inside space-y-1 ml-4 mt-2">
+                  <li><strong>idempotency</strong></li>
+                  <li><strong>safe restarts</strong></li>
+                  <li><strong>tolerance of partial failures</strong></li>
+                </ul>
+              </div>
 
--- Check for orphaned records
-SELECT h.id 
-FROM new_history h
-LEFT JOIN users u ON h.user_id = u.id
-WHERE u.id IS NULL;
+              <div>
+                <h5 className="text-base font-semibold mt-4 mb-2">Adaptive batch sizing (throughput-driven)</h5>
+                <p>
+                  Batch sizes <strong>dynamically scale</strong> based on observed rows/sec, allowing the system to <strong>push harder when conditions are good</strong> and <strong>back off under contention</strong>.
+                </p>
+                <CodeBlock
+                  language="typescript"
+                  filename="adaptive_batch.ts"
+                  code={`if (avgRowsPerSecond < 1000) {
+  batchSize = Math.max(batchSize * 0.7, MIN_BATCH_SIZE);
+} else if (avgRowsPerSecond > 3000) {
+  batchSize = Math.min(batchSize * 1.5, MAX_BATCH_SIZE);
+}`}
+                />
+                <p className="mt-3">
+                  This avoids <strong>hard-coded batch assumptions</strong> and keeps <strong>CPU utilization high</strong> without overwhelming the database.
+                </p>
+              </div>
 
--- Validate date ranges
-SELECT 
-  MIN(created_at) as min_date,
-  MAX(created_at) as max_date,
-  COUNT(*) as total_records
-FROM new_history
-WHERE created_at < '2020-01-01' OR created_at > NOW();`}
-            />
-          </div>
+              <div>
+                <h5 className="text-base font-semibold mt-4 mb-2">Lock-aware execution with bounded retries</h5>
+                <p>
+                  All reads and writes are wrapped with <strong>explicit lock timeouts</strong> and <strong>retry logic</strong>. Deadlocks and lock waits are treated as <strong>expected behavior at scale, not fatal errors</strong>.
+                </p>
+                <p>
+                  Retries are <strong>bounded to prevent runaway contention</strong>.
+                </p>
+                <CodeBlock
+                  language="typescript"
+                  filename="lock_aware.ts"
+                  code={`async function executeWithRetry<T>(operation: () => Promise<T>): Promise<T> {
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      return await db.transaction(async (tx) => {
+        await tx.query('SET innodb_lock_wait_timeout = 5');
+        return await operation();
+      });
+    } catch (error) {
+      if (isLockError(error) && attempt < 2) {
+        await sleep(100 * (attempt + 1));
+        continue;
+      }
+      throw error;
+    }
+  }
+  throw new Error('Max retries exceeded');
+}`}
+                />
+              </div>
 
-          <div>
-            <h4 className="text-xl font-semibold mb-3 mt-4">Key Challenges</h4>
-            <ul className="list-disc list-inside space-y-1 ml-4">
-              <li><strong>Zero downtime:</strong> Implemented dual-write patterns to keep both systems in sync</li>
-              <li><strong>Data validation:</strong> Built comprehensive checksums and integrity validators</li>
-              <li><strong>Rollback strategy:</strong> Maintained ability to revert migration at any point</li>
-              <li><strong>Performance:</strong> Optimized batch processing to handle millions of records efficiently</li>
-            </ul>
+              <div>
+                <h5 className="text-base font-semibold mt-4 mb-2">Automated kill switch with early warning</h5>
+                <p>
+                  The migration <strong>continuously monitors</strong>:
+                </p>
+                <ul className="list-disc list-inside space-y-1 ml-4 mt-2">
+                  <li>process CPU and memory</li>
+                  <li>system memory</li>
+                  <li>database connection pool usage</li>
+                  <li>disk growth relative to a detected baseline</li>
+                  <li><code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">CloudSQL</code> CPU and memory</li>
+                  <li>error rates and query timeouts</li>
+                </ul>
+                <p className="mt-3">
+                  <strong>Slack warnings are sent before thresholds are reached</strong>. If a hard limit is exceeded, the system performs a safe shutdown:
+                </p>
+                <CodeBlock
+                  language="typescript"
+                  filename="kill_switch.ts"
+                  code={`if (cpu > MAX_CPU || memoryMB > MAX_MEMORY || errorRate > MAX_ERROR_RATE) {
+  saveResumeState();
+  flushFileOperations();
+  process.exit(130); // safe, resumable shutdown
+}`}
+                />
+                <p className="mt-3">
+                  Resume state is written <strong>atomically to avoid corruption</strong>:
+                </p>
+                <CodeBlock
+                  language="typescript"
+                  filename="resume_state.ts"
+                  code={`fs.writeFileSync(tempFile, JSON.stringify(state));
+fs.renameSync(tempFile, resumeStateFile);`}
+                />
+                <p className="mt-3">
+                  This ensures the migration can <strong>resume exactly where it left off</strong> with <strong>no data loss</strong>.
+                </p>
+              </div>
+
+              <div>
+                <h5 className="text-base font-semibold mt-4 mb-2">Post-load index creation (separate phase)</h5>
+                <p>
+                  Indexes are created <strong>after data loading, sequentially</strong>, with:
+                </p>
+                <ul className="list-disc list-inside space-y-1 ml-4 mt-2">
+                  <li><strong>preflight existence checks</strong></li>
+                  <li><strong>session-level timeout tuning</strong></li>
+                  <li><strong>retries</strong></li>
+                  <li><strong>cooldown pauses between indexes</strong></li>
+                </ul>
+                <CodeBlock
+                  language="sql"
+                  filename="index_creation.sql"
+                  code={`CREATE INDEX idx_expenses_user_date ON expenses_archive(user_id, date);
+SELECT SLEEP(60);`}
+                />
+              </div>
+            </div>
           </div>
         </div>
       ),
