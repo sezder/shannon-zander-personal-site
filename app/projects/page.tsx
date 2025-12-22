@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { SectionContainer } from '../components/section-container'
+import { CodeBlock } from '../components/code-block'
 
 function ChevronIcon({ isOpen }: { isOpen: boolean }) {
   return (
@@ -189,12 +190,105 @@ export default function ProjectsPage() {
       title: 'History Table Migration',
       content: (
         <div className="space-y-4">
-          <p>
-            Migrated historical data from legacy systems to a new normalized schema while maintaining data integrity and zero downtime.
-          </p>
-          <p>
-            This project involved migrating millions of records across multiple database tables, ensuring referential integrity and implementing rollback strategies.
-          </p>
+          <div>
+            <h4 className="text-xl font-semibold mb-3 mt-4">Overview</h4>
+            <p>
+              Migrated historical data from legacy systems to a new normalized schema while maintaining data integrity and zero downtime.
+            </p>
+            <p>
+              This project involved migrating millions of records across multiple database tables, ensuring referential integrity and implementing rollback strategies.
+            </p>
+          </div>
+
+          <div>
+            <h4 className="text-xl font-semibold mb-3 mt-4">Migration Strategy</h4>
+            <p>
+              The migration used a phased approach with dual-write patterns to ensure zero downtime. Here's an example of the migration script structure:
+            </p>
+            <CodeBlock
+              language="typescript"
+              filename="migration.ts"
+              code={`async function migrateHistoryTable(
+  sourceTable: string,
+  targetTable: string,
+  batchSize: number = 10000
+): Promise<void> {
+  let offset = 0
+  let hasMore = true
+
+  while (hasMore) {
+    // Fetch batch of records
+    const batch = await db.query(
+      \`SELECT * FROM \${sourceTable} 
+       ORDER BY id 
+       LIMIT \${batchSize} OFFSET \${offset}\`
+    )
+
+    if (batch.length === 0) {
+      hasMore = false
+      break
+    }
+
+    // Transform and validate data
+    const transformed = batch.map(transformLegacyRecord)
+    const validated = await validateRecords(transformed)
+
+    // Dual-write: write to both old and new tables
+    await db.transaction(async (tx) => {
+      await tx.insert(targetTable, validated)
+      // Keep source table in sync during migration
+      await tx.update(sourceTable, { migrated: true }, { id: batch.map(r => r.id) })
+    })
+
+    offset += batchSize
+    console.log(\`Migrated \${offset} records\`)
+  }
+
+  // Verify data integrity
+  await verifyMigrationIntegrity(sourceTable, targetTable)
+}`}
+            />
+          </div>
+
+          <div>
+            <h4 className="text-xl font-semibold mb-3 mt-4">Data Integrity Checks</h4>
+            <p>
+              Implemented comprehensive validation to ensure referential integrity throughout the migration:
+            </p>
+            <CodeBlock
+              language="sql"
+              filename="integrity_check.sql"
+              code={`-- Verify record counts match
+SELECT 
+  (SELECT COUNT(*) FROM legacy_history) as legacy_count,
+  (SELECT COUNT(*) FROM new_history) as new_count,
+  (SELECT COUNT(*) FROM legacy_history) - (SELECT COUNT(*) FROM new_history) as difference;
+
+-- Check for orphaned records
+SELECT h.id 
+FROM new_history h
+LEFT JOIN users u ON h.user_id = u.id
+WHERE u.id IS NULL;
+
+-- Validate date ranges
+SELECT 
+  MIN(created_at) as min_date,
+  MAX(created_at) as max_date,
+  COUNT(*) as total_records
+FROM new_history
+WHERE created_at < '2020-01-01' OR created_at > NOW();`}
+            />
+          </div>
+
+          <div>
+            <h4 className="text-xl font-semibold mb-3 mt-4">Key Challenges</h4>
+            <ul className="list-disc list-inside space-y-1 ml-4">
+              <li><strong>Zero downtime:</strong> Implemented dual-write patterns to keep both systems in sync</li>
+              <li><strong>Data validation:</strong> Built comprehensive checksums and integrity validators</li>
+              <li><strong>Rollback strategy:</strong> Maintained ability to revert migration at any point</li>
+              <li><strong>Performance:</strong> Optimized batch processing to handle millions of records efficiently</li>
+            </ul>
+          </div>
         </div>
       ),
     },
