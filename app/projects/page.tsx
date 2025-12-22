@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { SectionContainer } from '../components/section-container'
 import { CodeBlock } from '../components/code-block'
+import { SpacerLine } from '../components/spacer-line'
 
 function ChevronIcon({ isOpen }: { isOpen: boolean }) {
   return (
@@ -83,8 +84,9 @@ export default function ProjectsPage() {
             </p>
           </div>
 
-          <div>
-            <h4 className="text-xl font-semibold mb-3 mt-4">Background: Year-Based Tables</h4>
+          <SpacerLine>
+            <div>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Background: Year-Based Tables</h4>
             <h5 className="text-base font-semibold mt-4 mb-2">The Previous Approach</h5>
             <p>
               Prior to this work, we used separate year-based tables such as <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">expenses_2022</code> and <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">expenses_2023</code> as a form of unofficial partitioning. While workable at smaller scale, this approach introduced increasing operational costs.
@@ -100,10 +102,12 @@ export default function ProjectsPage() {
             <p>
               Native partitioning was an attractive alternative if it could deliver both <strong>performance improvements and operational simplicity</strong>.
             </p>
-          </div>
+            </div>
+          </SpacerLine>
 
-          <div>
-            <h4 className="text-xl font-semibold mb-3 mt-4">What I Tested</h4>
+          <SpacerLine>
+            <div>
+              <h4 className="text-xl font-semibold mb-3 mt-4">What I Tested</h4>
             <h5 className="text-base font-semibold mt-4 mb-2">Test Setup</h5>
             <p>
               Using approximately <strong>twenty million rows per table</strong> and representative users with roughly <strong>twenty-two thousand rows each</strong>, I benchmarked the following:
@@ -119,10 +123,12 @@ export default function ProjectsPage() {
             <p>
               All tests were run with warm caches and measured using <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">EXPLAIN ANALYZE</code>.
             </p>
-          </div>
+            </div>
+          </SpacerLine>
 
-          <div>
-            <h4 className="text-xl font-semibold mb-3 mt-4">Key Result</h4>
+          <SpacerLine>
+            <div>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Key Result</h4>
             <h5 className="text-base font-semibold mt-4 mb-2">Overall Finding</h5>
             <p>
               Partitioning <strong>did not produce a clear, across-the-board performance improvement</strong>.
@@ -131,10 +137,12 @@ export default function ProjectsPage() {
             <p>
               Even with year-based partition pruning, carefully tuned composite indexes, and alternative primary key orderings, the unpartitioned table consistently performed within the same range and <strong>often performed better for critical queries</strong>.
             </p>
-          </div>
+            </div>
+          </SpacerLine>
 
-          <div>
-            <h4 className="text-xl font-semibold mb-3 mt-4">Where the Base Table Remained Competitive</h4>
+          <SpacerLine>
+            <div>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Where the Base Table Remained Competitive</h4>
             <h5 className="text-base font-semibold mt-4 mb-2">User- and Date-Scoped <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">SELECT</code>s</h5>
             <p>
               For the dominant access pattern, user-scoped reads over date ranges, the base table was either <strong>faster or within ten to twenty milliseconds</strong> of the best-performing partitioned variant. <strong>Strong indexing on <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">(user_id, date)</code> significantly reduced</strong> the theoretical advantage of partition pruning.
@@ -151,10 +159,12 @@ export default function ProjectsPage() {
             <p>
               Sequential ingestion performance was comparable across all configurations. Partitioning did not provide a material advantage, and the base table handled sustained inserts without issue.
             </p>
-          </div>
+            </div>
+          </SpacerLine>
 
-          <div>
-            <h4 className="text-xl font-semibold mb-3 mt-4">Decision</h4>
+          <SpacerLine>
+            <div>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Decision</h4>
             <h5 className="text-base font-semibold mt-4 mb-2">The Conventional Wisdom</h5>
             <p>
               Partitioning is often treated as an obvious scalability step. In this case, <strong>the data showed otherwise</strong>.
@@ -170,10 +180,12 @@ export default function ProjectsPage() {
             <p>
               Given these tradeoffs, I deferred partitioning because <strong>it was not justified by measured results</strong>.
             </p>
-          </div>
+            </div>
+          </SpacerLine>
 
-          <div>
-            <h4 className="text-xl font-semibold mb-3 mt-4">Conclusion</h4>
+          <SpacerLine>
+            <div>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Conclusion</h4>
             <h5 className="text-base font-semibold mt-4 mb-2">Summary</h5>
             <p>
               After testing optimized composite indexes, multiple partitioning strategies, and different primary key orderings, the original unpartitioned table remained <strong>competitive, stable, and predictable</strong>.
@@ -182,7 +194,8 @@ export default function ProjectsPage() {
             <p>
               Partitioning remains a viable future step. It will be revisited once it offers <strong>clear and measurable advantages</strong> over a well-designed base table.
             </p>
-          </div>
+            </div>
+          </SpacerLine>
         </div>
       ),
     },
@@ -200,8 +213,9 @@ export default function ProjectsPage() {
             </p>
           </div>
 
-          <div>
-            <h4 className="text-xl font-semibold mb-3 mt-4">Key Design Decisions</h4>
+          <SpacerLine>
+            <div>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Key Design Decisions</h4>
             
             <div className="space-y-4">
               <div>
@@ -382,7 +396,8 @@ SELECT SLEEP(60);`}
                 />
               </div>
             </div>
-          </div>
+            </div>
+          </SpacerLine>
         </div>
       ),
     },
