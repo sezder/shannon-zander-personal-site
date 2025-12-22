@@ -102,6 +102,9 @@ export default function WorkingWithMe() {
             <h3 className="mb-3 text-lg font-semibold text-neutral-800 dark:text-neutral-200">
               Team Fit Matters to Me
             </h3>
+            <p className="mb-4 text-neutral-700 dark:text-neutral-300">
+              Your team may be a good fit for me if:
+            </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <div className="bg-white dark:bg-neutral-900 rounded-lg p-3 border-2 border-neutral-300 dark:border-neutral-700 shadow-md">
                 <div className="flex items-center gap-2 mb-1.5">
@@ -144,54 +147,6 @@ export default function WorkingWithMe() {
               </div>
             </div>
           </div>
-
-          <div className="mb-10">
-            <h3 className="mb-4 text-lg font-semibold text-neutral-800 dark:text-neutral-200">
-              Bonus Alignment
-            </h3>
-            <ul className="space-y-2 text-neutral-700 dark:text-neutral-300">
-              <li>• You use <strong>Linear</strong> and value <strong>opinionated, low-noise developer tooling</strong>.</li>
-              <li>• You use <strong>Prisma</strong> or similar ORMs and care about <strong>schema integrity, migration safety, and database validation in CI/CD</strong>.</li>
-            </ul>
-          </div>
-
-        <div className="border-t border-neutral-200 dark:border-neutral-800 pt-8">
-          <h2 className="mb-6 text-xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
-            Get in Touch
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white dark:bg-neutral-900 rounded-lg p-4 border border-neutral-200 dark:border-neutral-800">
-              <h3 className="mb-3 text-base font-semibold text-neutral-800 dark:text-neutral-200">Email</h3>
-              <a
-                href="mailto:shannon.e.zander@gmail.com"
-                className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 underline text-sm"
-              >
-                shannon.e.zander@gmail.com
-              </a>
-            </div>
-            <div className="bg-white dark:bg-neutral-900 rounded-lg p-4 border border-neutral-200 dark:border-neutral-800">
-              <h3 className="mb-3 text-base font-semibold text-neutral-800 dark:text-neutral-200">Links</h3>
-              <div className="flex flex-col gap-2">
-                <a
-                  href="https://github.com/sezder"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 underline text-sm"
-                >
-                  GitHub
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/shannon-e-zander/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 underline text-sm"
-                >
-                  LinkedIn
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
       </SectionContainer>
     </section>
   )

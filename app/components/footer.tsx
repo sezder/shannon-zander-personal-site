@@ -2,7 +2,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope, faDownload } from '@fortawesome/free-solid-svg-icons'
 
 function WellfoundIcon() {
   return (
@@ -29,47 +29,78 @@ export default function Footer() {
           href="https://github.com/sezder"
           target="_blank"
           rel="noopener noreferrer"
-          className="w-10 h-10 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex items-center justify-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
+          className="group relative w-10 h-10 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex items-center justify-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
           aria-label="GitHub"
+          title=""
         >
           <FontAwesomeIcon
             icon={faGithub}
             className="w-5 h-5 text-black dark:text-white"
             aria-hidden="true"
           />
+          <span className="absolute bottom-full mb-3 px-2 py-1 text-xs font-medium text-white bg-neutral-900 dark:bg-neutral-100 dark:text-neutral-900 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 group-focus:opacity-100 pointer-events-none transition-opacity">
+            GitHub
+          </span>
         </a>
         <a
           href="https://www.linkedin.com/in/shannon-e-zander/"
           target="_blank"
           rel="noopener noreferrer"
-          className="w-10 h-10 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex items-center justify-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
+          className="group relative w-10 h-10 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex items-center justify-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
           aria-label="LinkedIn"
+          title=""
         >
           <FontAwesomeIcon
             icon={faLinkedin}
             className="w-5 h-5 text-black dark:text-white"
             aria-hidden="true"
           />
+          <span className="absolute bottom-full mb-3 px-2 py-1 text-xs font-medium text-white bg-neutral-900 dark:bg-neutral-100 dark:text-neutral-900 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 group-focus:opacity-100 pointer-events-none transition-opacity">
+            LinkedIn
+          </span>
         </a>
         <a
           href="https://wellfound.com/u/shannon-zander"
           target="_blank"
           rel="noopener noreferrer"
-          className="w-10 h-10 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex items-center justify-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
+          className="group relative w-10 h-10 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex items-center justify-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
           aria-label="Wellfound"
+          title=""
         >
           <WellfoundIcon />
+          <span className="absolute bottom-full mb-3 px-2 py-1 text-xs font-medium text-white bg-neutral-900 dark:bg-neutral-100 dark:text-neutral-900 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 group-focus:opacity-100 pointer-events-none transition-opacity">
+            Wellfound
+          </span>
         </a>
         <a
           href="mailto:shannon.e.zander@gmail.com"
-          className="w-10 h-10 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex items-center justify-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
+          className="group relative w-10 h-10 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex items-center justify-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
           aria-label="Email"
+          title=""
         >
           <FontAwesomeIcon
             icon={faEnvelope}
             className="w-5 h-5 text-black dark:text-white"
             aria-hidden="true"
           />
+          <span className="absolute bottom-full mb-3 px-2 py-1 text-xs font-medium text-white bg-neutral-900 dark:bg-neutral-100 dark:text-neutral-900 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 group-focus:opacity-100 pointer-events-none transition-opacity">
+            Email
+          </span>
+        </a>
+        <a
+          href="/Shannon Zander Resume.pdf"
+          download
+          className="group relative w-10 h-10 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex items-center justify-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
+          title=""
+        >
+          <FontAwesomeIcon
+            icon={faDownload}
+            className="w-5 h-5 text-black dark:text-white"
+            aria-hidden="true"
+          />
+          <span className="absolute bottom-full mb-3 px-2 py-1 text-xs font-medium text-white bg-neutral-900 dark:bg-neutral-100 dark:text-neutral-900 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 group-focus:opacity-100 pointer-events-none transition-opacity">
+            Resume
+          </span>
         </a>
       </div>
       <p className="hidden md:block mt-8 text-neutral-600 dark:text-neutral-300">

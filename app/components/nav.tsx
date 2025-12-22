@@ -7,9 +7,6 @@ const navItems = {
   '/projects': {
     name: 'Projects',
   },
-  '/work': {
-    name: 'Work',
-  },
   '/working-with-me': {
     name: "Interested in having me on your team?",
   },

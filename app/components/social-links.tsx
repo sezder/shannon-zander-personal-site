@@ -2,7 +2,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons'
-import { faEnvelope, faFileDownload } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope, faDownload } from '@fortawesome/free-solid-svg-icons'
 
 function WellfoundIcon() {
   return (
@@ -30,7 +30,7 @@ export function SocialLinks() {
         rel="noopener noreferrer"
         className="group relative w-10 h-10 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex items-center justify-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-600"
         aria-label="GitHub"
-        title="GitHub"
+        title=""
       >
         <FontAwesomeIcon
           icon={faGithub}
@@ -47,7 +47,7 @@ export function SocialLinks() {
         rel="noopener noreferrer"
         className="group relative w-10 h-10 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex items-center justify-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-600"
         aria-label="LinkedIn"
-        title="LinkedIn"
+        title=""
       >
         <FontAwesomeIcon
           icon={faLinkedin}
@@ -64,7 +64,7 @@ export function SocialLinks() {
         rel="noopener noreferrer"
         className="group relative w-10 h-10 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex items-center justify-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-600"
         aria-label="Wellfound"
-        title="Wellfound"
+        title=""
       >
         <WellfoundIcon />
         <span className="absolute right-full mr-3 px-2 py-1 text-xs font-medium text-white bg-neutral-900 dark:bg-neutral-100 dark:text-neutral-900 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 group-focus:opacity-100 pointer-events-none transition-opacity">
@@ -75,7 +75,7 @@ export function SocialLinks() {
         href="mailto:shannon.e.zander@gmail.com"
         className="group relative w-10 h-10 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex items-center justify-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-600"
         aria-label="Email"
-        title="Email"
+        title=""
       >
         <FontAwesomeIcon
           icon={faEnvelope}
@@ -90,11 +90,10 @@ export function SocialLinks() {
         href="/Shannon Zander Resume.pdf"
         download
         className="group relative w-10 h-10 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex items-center justify-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-600"
-        aria-label="Download Resume"
-        title="Download Resume"
+        title=""
       >
         <FontAwesomeIcon
-          icon={faFileDownload}
+          icon={faDownload}
           className="w-5 h-5 text-black dark:text-white"
           aria-hidden="true"
         />
