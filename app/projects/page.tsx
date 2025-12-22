@@ -74,11 +74,11 @@ export default function ProjectsPage() {
         <div className="space-y-4">
           <div>
             <h4 className="text-xl font-semibold mb-3 mt-4">Overview</h4>
-            <h5 className="text-base font-semibold mt-4 mb-2">The Question</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">The Question</h5>
             <p>
               I evaluated whether an expenses table approaching <strong>approximately two billion rows</strong> should be migrated to a native MySQL partitioned design. Using production-shaped data and real workloads, I tested multiple partitioning strategies, composite index designs, and primary key orderings.
             </p>
-            <h5 className="text-base font-semibold mt-4 mb-2">The Outcome</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">The Outcome</h5>
             <p>
               The outcome was not that partitioning failed. Instead, the testing showed that even under aggressive optimization, the existing unpartitioned table remained <strong>highly competitive and, in several cases, superior</strong>. Based on these results, I chose to defer partitioning.
             </p>
@@ -87,18 +87,18 @@ export default function ProjectsPage() {
           <SpacerLine>
             <div>
               <h4 className="text-xl font-semibold mb-3 mt-4">Background: Year-Based Tables</h4>
-            <h5 className="text-base font-semibold mt-4 mb-2">The Previous Approach</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">The Previous Approach</h5>
             <p>
               Prior to this work, we used separate year-based tables such as <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">expenses_2022</code> and <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">expenses_2023</code> as a form of unofficial partitioning. While workable at smaller scale, this approach introduced increasing operational costs.
             </p>
-            <h5 className="text-base font-semibold mt-4 mb-2">Operational Challenges</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">Operational Challenges</h5>
             <ul className="list-disc list-inside space-y-1 ml-4 mt-2">
               <li>Applications required <strong>complex query logic</strong> to support cross-year access</li>
               <li><strong>Schema changes had to be coordinated</strong> across multiple tables</li>
               <li>MySQL could not perform <strong>native partition pruning</strong>, which forced manual routing logic in application code</li>
               <li>Over time, this also increased the <strong>risk of schema drift</strong></li>
             </ul>
-            <h5 className="text-base font-semibold mt-4 mb-2">The Opportunity</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">The Opportunity</h5>
             <p>
               Native partitioning was an attractive alternative if it could deliver both <strong>performance improvements and operational simplicity</strong>.
             </p>
@@ -108,18 +108,18 @@ export default function ProjectsPage() {
           <SpacerLine>
             <div>
               <h4 className="text-xl font-semibold mb-3 mt-4">What I Tested</h4>
-            <h5 className="text-base font-semibold mt-4 mb-2">Test Setup</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">Test Setup</h5>
             <p>
               Using approximately <strong>twenty million rows per table</strong> and representative users with roughly <strong>twenty-two thousand rows each</strong>, I benchmarked the following:
             </p>
-            <h5 className="text-base font-semibold mt-4 mb-2">Test Configurations</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">Test Configurations</h5>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>The original unpartitioned table</li>
               <li>Year-partitioned tables with optimized composite indexes</li>
               <li>Multiple primary key orderings, including <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">(year, transaction_id)</code> and <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">(transaction_id, year)</code></li>
               <li>Mixed workloads including user-scoped reads, multi-year date range queries, complex filters, bulk and individual <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">UPDATE</code>s, and sequential <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">INSERT</code>s</li>
             </ul>
-            <h5 className="text-base font-semibold mt-4 mb-2">Measurement Methodology</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">Measurement Methodology</h5>
             <p>
               All tests were run with warm caches and measured using <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">EXPLAIN ANALYZE</code>.
             </p>
@@ -129,11 +129,11 @@ export default function ProjectsPage() {
           <SpacerLine>
             <div>
               <h4 className="text-xl font-semibold mb-3 mt-4">Key Result</h4>
-            <h5 className="text-base font-semibold mt-4 mb-2">Overall Finding</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">Overall Finding</h5>
             <p>
               Partitioning <strong>did not produce a clear, across-the-board performance improvement</strong>.
             </p>
-            <h5 className="text-base font-semibold mt-4 mb-2">Detailed Analysis</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">Detailed Analysis</h5>
             <p>
               Even with year-based partition pruning, carefully tuned composite indexes, and alternative primary key orderings, the unpartitioned table consistently performed within the same range and <strong>often performed better for critical queries</strong>.
             </p>
@@ -143,11 +143,11 @@ export default function ProjectsPage() {
           <SpacerLine>
             <div>
               <h4 className="text-xl font-semibold mb-3 mt-4">Where the Base Table Remained Competitive</h4>
-            <h5 className="text-base font-semibold mt-4 mb-2">User- and Date-Scoped <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">SELECT</code>s</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">User- and Date-Scoped <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">SELECT</code>s</h5>
             <p>
               For the dominant access pattern, user-scoped reads over date ranges, the base table was either <strong>faster or within ten to twenty milliseconds</strong> of the best-performing partitioned variant. <strong>Strong indexing on <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">(user_id, date)</code> significantly reduced</strong> the theoretical advantage of partition pruning.
             </p>
-            <h5 className="text-base font-semibold mt-4 mb-2"><code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">UPDATE</code> Operations</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3"><code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">UPDATE</code> Operations</h5>
             <p>
               <strong><code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">UPDATE</code> performance provided the strongest signal</strong>. One partitioned configuration degraded <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">UPDATE</code> operations <strong>from milliseconds to more than thirty seconds</strong>. Even the safer partitioned variants showed no meaningful improvement over the base table. The unpartitioned table remained <strong>predictable and stable</strong> under write load.
             </p>
@@ -155,7 +155,7 @@ export default function ProjectsPage() {
             <p>
               This reinforced an important conclusion: <strong>A well-indexed unpartitioned table can outperform a partitioned table with an imperfect primary key, even at large scale</strong>.
             </p>
-            <h5 className="text-base font-semibold mt-4 mb-2"><code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">INSERT</code> Workloads</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3"><code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">INSERT</code> Workloads</h5>
             <p>
               Sequential ingestion performance was comparable across all configurations. Partitioning did not provide a material advantage, and the base table handled sustained inserts without issue.
             </p>
@@ -165,18 +165,18 @@ export default function ProjectsPage() {
           <SpacerLine>
             <div>
               <h4 className="text-xl font-semibold mb-3 mt-4">Decision</h4>
-            <h5 className="text-base font-semibold mt-4 mb-2">The Conventional Wisdom</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">The Conventional Wisdom</h5>
             <p>
               Partitioning is often treated as an obvious scalability step. In this case, <strong>the data showed otherwise</strong>.
             </p>
-            <h5 className="text-base font-semibold mt-4 mb-2">What the Data Showed</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">What the Data Showed</h5>
             <ul className="list-disc list-inside space-y-1 ml-4 mt-2">
               <li><strong>Index design had a larger impact on performance than partitioning</strong></li>
               <li>Primary key ordering introduced meaningful risk</li>
               <li>The existing table already exhibited <strong>strong and predictable performance characteristics</strong></li>
               <li>Partitioning added <strong>new failure modes without delivering clear gains</strong></li>
             </ul>
-            <h5 className="text-base font-semibold mt-4 mb-2">The Decision</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">The Decision</h5>
             <p>
               Given these tradeoffs, I deferred partitioning because <strong>it was not justified by measured results</strong>.
             </p>
@@ -186,11 +186,11 @@ export default function ProjectsPage() {
           <SpacerLine>
             <div>
               <h4 className="text-xl font-semibold mb-3 mt-4">Conclusion</h4>
-            <h5 className="text-base font-semibold mt-4 mb-2">Summary</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">Summary</h5>
             <p>
               After testing optimized composite indexes, multiple partitioning strategies, and different primary key orderings, the original unpartitioned table remained <strong>competitive, stable, and predictable</strong>.
             </p>
-            <h5 className="text-base font-semibold mt-4 mb-2">Future Considerations</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">Future Considerations</h5>
             <p>
               Partitioning remains a viable future step. It will be revisited once it offers <strong>clear and measurable advantages</strong> over a well-designed base table.
             </p>
@@ -219,7 +219,7 @@ export default function ProjectsPage() {
             
             <div className="space-y-4">
               <div>
-                <h5 className="text-base font-semibold mt-4 mb-2">Colocated execution (VM + database)</h5>
+                <h5 className="text-lg font-semibold mt-4 mb-3">Colocated execution (VM + database)</h5>
                 <p>
                   The migration ran on a <strong>dedicated VM</strong> deployed in the same <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">GCP</code> region and zone as the <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">CloudSQL</code> instance. This was a <strong>deliberate colocation choice</strong> to:
                 </p>
@@ -230,8 +230,9 @@ export default function ProjectsPage() {
                 </ul>
               </div>
 
-              <div>
-                <h5 className="text-base font-semibold mt-4 mb-2">Cursor-based pagination (date-driven, monotonic)</h5>
+              <SpacerLine>
+                <div>
+                  <h5 className="text-lg font-semibold mt-4 mb-3">Cursor-based pagination (date-driven, monotonic)</h5>
                 <p>
                   Instead of <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">OFFSET</code> pagination or repeated <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">COUNT</code> queries (which degrade badly at scale), the migration uses a <strong>monotonic, date-based cursor</strong>. Completion is determined by <strong>exhausting the source cursor</strong>, not by matching row counts.
                 </p>
@@ -262,10 +263,12 @@ if (upperBound === lastDate) {
                 <p className="mt-3">
                   <strong>Failing fast here is intentional</strong> and safer than continuing indefinitely.
                 </p>
-              </div>
+                </div>
+              </SpacerLine>
 
-              <div>
-                <h5 className="text-base font-semibold mt-4 mb-2">Idempotent, resume-safe writes</h5>
+              <SpacerLine>
+                <div>
+                  <h5 className="text-lg font-semibold mt-4 mb-3">Idempotent, resume-safe writes</h5>
                 <p>
                   All batch inserts use <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">INSERT IGNORE</code>, enabling <strong>safe re-runs</strong> and <strong>mid-batch resumes</strong> without risking duplicate data or manual cleanup. Duplicates are <strong>expected due to resumability and prior partial runs</strong>, and are handled intentionally.
                 </p>
@@ -286,10 +289,12 @@ ORDER BY date ASC, transaction_id ASC;`}
                   <li><strong>safe restarts</strong></li>
                   <li><strong>tolerance of partial failures</strong></li>
                 </ul>
-              </div>
+                </div>
+              </SpacerLine>
 
-              <div>
-                <h5 className="text-base font-semibold mt-4 mb-2">Adaptive batch sizing (throughput-driven)</h5>
+              <SpacerLine>
+                <div>
+                  <h5 className="text-lg font-semibold mt-4 mb-3">Adaptive batch sizing (throughput-driven)</h5>
                 <p>
                   Batch sizes <strong>dynamically scale</strong> based on observed rows/sec, allowing the system to <strong>push harder when conditions are good</strong> and <strong>back off under contention</strong>.
                 </p>
@@ -305,10 +310,12 @@ ORDER BY date ASC, transaction_id ASC;`}
                 <p className="mt-3">
                   This avoids <strong>hard-coded batch assumptions</strong> and keeps <strong>CPU utilization high</strong> without overwhelming the database.
                 </p>
-              </div>
+                </div>
+              </SpacerLine>
 
-              <div>
-                <h5 className="text-base font-semibold mt-4 mb-2">Lock-aware execution with bounded retries</h5>
+              <SpacerLine>
+                <div>
+                  <h5 className="text-lg font-semibold mt-4 mb-3">Lock-aware execution with bounded retries</h5>
                 <p>
                   All reads and writes are wrapped with <strong>explicit lock timeouts</strong> and <strong>retry logic</strong>. Deadlocks and lock waits are treated as <strong>expected behavior at scale, not fatal errors</strong>.
                 </p>
@@ -336,10 +343,12 @@ ORDER BY date ASC, transaction_id ASC;`}
   throw new Error('Max retries exceeded');
 }`}
                 />
-              </div>
+                </div>
+              </SpacerLine>
 
-              <div>
-                <h5 className="text-base font-semibold mt-4 mb-2">Automated kill switch with early warning</h5>
+              <SpacerLine>
+                <div>
+                  <h5 className="text-lg font-semibold mt-4 mb-3">Automated kill switch with early warning</h5>
                 <p>
                   The migration <strong>continuously monitors</strong>:
                 </p>
@@ -375,10 +384,12 @@ fs.renameSync(tempFile, resumeStateFile);`}
                 <p className="mt-3">
                   This ensures the migration can <strong>resume exactly where it left off</strong> with <strong>no data loss</strong>.
                 </p>
-              </div>
+                </div>
+              </SpacerLine>
 
-              <div>
-                <h5 className="text-base font-semibold mt-4 mb-2">Post-load index creation (separate phase)</h5>
+              <SpacerLine>
+                <div>
+                  <h5 className="text-lg font-semibold mt-4 mb-3">Post-load index creation (separate phase)</h5>
                 <p>
                   Indexes are created <strong>after data loading, sequentially</strong>, with:
                 </p>
@@ -394,7 +405,8 @@ fs.renameSync(tempFile, resumeStateFile);`}
                   code={`CREATE INDEX idx_expenses_user_date ON expenses_archive(user_id, date);
 SELECT SLEEP(60);`}
                 />
-              </div>
+                </div>
+              </SpacerLine>
             </div>
             </div>
           </SpacerLine>
