@@ -18,7 +18,7 @@ export default function WorkingWithMe() {
 
           <div className="mb-8">
             <h3 className="mb-3 text-lg font-semibold text-neutral-800 dark:text-neutral-200">
-              Necessary Requirements
+              Necessary requirements
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <div className="bg-white dark:bg-neutral-900 rounded-lg p-3 border-2 border-neutral-300 dark:border-neutral-700 shadow-md">
@@ -27,7 +27,7 @@ export default function WorkingWithMe() {
                     <FontAwesomeIcon icon={faRocket} className="w-3.5 h-3.5 text-black dark:text-white" />
                   </div>
                   <h4 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
-                    Early-Stage Startups
+                    Early-stage startups
                   </h4>
                 </div>
                 <p className="text-xs text-neutral-700 dark:text-neutral-300 leading-snug">
@@ -40,11 +40,11 @@ export default function WorkingWithMe() {
                     <FontAwesomeIcon icon={faGlobe} className="w-3.5 h-3.5 text-black dark:text-white" />
                   </div>
                   <h4 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
-                    Remote Only
+                    Remote only
                   </h4>
                 </div>
                 <p className="text-xs text-neutral-700 dark:text-neutral-300 leading-snug">
-                  I work <strong>remote only</strong>. I prefer <strong>distributed teams</strong> who understand the value of <strong>deep work</strong> in getting a competitive edge. You're <strong>remote-first</strong> and prioritize <strong>depth of communication</strong>.
+                  I work <strong>remote only</strong>. I value <strong>distributed teams</strong> who understand the value of <strong>deep work</strong> in getting a competitive edge.
                 </p>
               </div>
               <div className="bg-white dark:bg-neutral-900 rounded-lg p-3 border-2 border-neutral-300 dark:border-neutral-700 shadow-md">
@@ -53,11 +53,11 @@ export default function WorkingWithMe() {
                     <FontAwesomeIcon icon={faBriefcase} className="w-3.5 h-3.5 text-black dark:text-white" />
                   </div>
                   <h4 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
-                    Full-Time with Equity
+                    Full-time with equity
                   </h4>
                 </div>
                 <p className="text-xs text-neutral-700 dark:text-neutral-300 leading-snug">
-                  I'm seeking a <strong>full-time engineering role with equity</strong>.
+                  I only work <strong>full-time roles with equity</strong>. When I join a startup, I'm <strong>all in</strong>.
                 </p>
               </div>
             </div>
@@ -65,7 +65,7 @@ export default function WorkingWithMe() {
           
           <div className="mb-10">
             <h3 className="mb-4 text-lg font-semibold text-neutral-800 dark:text-neutral-200">
-              What I Do & How I Work
+              My approach
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="bg-white dark:bg-neutral-900 rounded-lg p-5 border-2 border-neutral-300 dark:border-neutral-700 shadow-md">
@@ -73,7 +73,7 @@ export default function WorkingWithMe() {
                   <div className="w-8 h-8 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex items-center justify-center flex-shrink-0">
                     <FontAwesomeIcon icon={faCompassDrafting} className="w-4 h-4 text-black dark:text-white" />
                   </div>
-                  <h4 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">What I Build</h4>
+                  <h4 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">What I build</h4>
                 </div>
                 <ul className="space-y-2 text-sm text-neutral-700 dark:text-neutral-300">
                   <li>• <strong>Backend-first</strong> product systems for <strong>B2B, SaaS, and fintech</strong></li>
@@ -86,7 +86,7 @@ export default function WorkingWithMe() {
                   <div className="w-8 h-8 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex items-center justify-center flex-shrink-0">
                     <FontAwesomeIcon icon={faGears} className="w-4 h-4 text-black dark:text-white" />
                   </div>
-                  <h4 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">How I Work</h4>
+                  <h4 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">How I work</h4>
                 </div>
                 <ul className="space-y-2 text-sm text-neutral-700 dark:text-neutral-300">
                   <li>• <strong>Backend-first</strong>, systems-oriented</li>
@@ -99,12 +99,9 @@ export default function WorkingWithMe() {
           </div>
 
           <div className="mb-10">
-            <h3 className="mb-3 text-lg font-semibold text-neutral-800 dark:text-neutral-200">
-              Team Fit Matters to Me
-            </h3>
-            <p className="mb-4 text-neutral-700 dark:text-neutral-300">
+            <h3 className="mb-4 text-lg font-semibold text-neutral-800 dark:text-neutral-200">
               Your team may be a good fit for me if:
-            </p>
+            </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <div className="bg-white dark:bg-neutral-900 rounded-lg p-3 border-2 border-neutral-300 dark:border-neutral-700 shadow-md">
                 <div className="flex items-center gap-2 mb-1.5">
@@ -112,7 +109,7 @@ export default function WorkingWithMe() {
                     <FontAwesomeIcon icon={faUsers} className="w-3.5 h-3.5 text-black dark:text-white" />
                   </div>
                   <h4 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
-                    Low Ego, High Ownership
+                    Low ego, high ownership
                   </h4>
                 </div>
                 <p className="text-xs text-neutral-700 dark:text-neutral-300 leading-snug">
@@ -125,7 +122,7 @@ export default function WorkingWithMe() {
                     <FontAwesomeIcon icon={faGears} className="w-3.5 h-3.5 text-black dark:text-white" />
                   </div>
                   <h4 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
-                    Process-Oriented
+                    Process-oriented
                   </h4>
                 </div>
                 <p className="text-xs text-neutral-700 dark:text-neutral-300 leading-snug">
@@ -138,7 +135,7 @@ export default function WorkingWithMe() {
                     <FontAwesomeIcon icon={faGauge} className="w-3.5 h-3.5 text-black dark:text-white" />
                   </div>
                   <h4 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
-                    Speed with Discipline
+                    Speed with discipline
                   </h4>
                 </div>
                 <p className="text-xs text-neutral-700 dark:text-neutral-300 leading-snug">
@@ -146,6 +143,12 @@ export default function WorkingWithMe() {
                 </p>
               </div>
             </div>
+          </div>
+
+          <div className="mt-12 pt-8 border-t border-neutral-200 dark:border-neutral-800">
+            <p className="text-neutral-700 dark:text-neutral-300">
+              If this resonates, let's talk. Reach out with a brief overview of what you're building and the problems you're looking to solve.
+            </p>
           </div>
       </SectionContainer>
     </section>

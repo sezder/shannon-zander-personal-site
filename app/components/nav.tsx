@@ -11,7 +11,7 @@ const navItems = {
     name: 'Projects',
   },
   '/working-with-me': {
-    name: "Interested in having me on your team?",
+    name: "Hiring?",
   },
 }
 
