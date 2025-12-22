@@ -414,15 +414,146 @@ SELECT SLEEP(60);`}
       ),
     },
     {
-      title: 'Stripe Migration',
+      title: 'Stripe Legacy Plan Migration',
       content: (
         <div className="space-y-4">
-          <p>
-            Migrated payment processing infrastructure to Stripe, handling subscription management, billing cycles, and payment methods.
-          </p>
-          <p>
-            Implemented webhook handlers, idempotency keys, and comprehensive error handling to ensure reliable payment processing.
-          </p>
+          <div>
+            <p className="text-neutral-600 dark:text-neutral-400 mb-4">
+              Production-safe subscription migration with validation, reconciliation, and observability
+            </p>
+          </div>
+
+          <SpacerLine>
+            <div>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Overview</h4>
+              <p>
+                I designed and executed a <strong>zero-downtime migration</strong> to move active subscribers from legacy <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">Stripe</code> price IDs to new plans in production. Because billing changes are irreversible and high-risk, the migration was built as a <strong>self-guarding operational system</strong>, not a one-off script.
+              </p>
+              <p>
+                The result was a <strong>controlled rollout</strong> that preserved billing continuity, respected coupon contracts, and produced <strong>auditable reconciliation artifacts</strong> before and after execution.
+              </p>
+            </div>
+          </SpacerLine>
+
+          <SpacerLine>
+            <div>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Problem</h4>
+              <p>
+                Legacy <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">Stripe</code> prices were still attached to live subscriptions while new pricing had already shipped across application code and infrastructure. Migrating these subscribers required handling:
+              </p>
+              <ul className="list-disc list-inside space-y-1 ml-4 mt-2">
+                <li><code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">Stripe</code> rate limits and transient API failures</li>
+                <li>Subscriptions changing state mid-migration</li>
+                <li>Contractual coupon constraints</li>
+                <li>The risk of operator error in production environments</li>
+              </ul>
+              <p className="mt-3">
+                A naive migration risked <strong>incorrect charges, broken subscriptions, or silent data drift</strong>.
+              </p>
+            </div>
+          </SpacerLine>
+
+          <SpacerLine>
+            <div>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Solution</h4>
+              <p>
+                I implemented a migration pipeline with <strong>safety and observability designed in from the start</strong>.
+              </p>
+            </div>
+          </SpacerLine>
+
+          <SpacerLine>
+            <div>
+              <h5 className="text-lg font-semibold mt-4 mb-3">Preflight safety gates</h5>
+              <p>
+                The script blocks execution unless all prerequisites are verified: correct environment, deployed infra (<code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">Terraform</code> + <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">Kubernetes</code>), valid price mappings, and required database records.
+              </p>
+            </div>
+          </SpacerLine>
+
+          <SpacerLine>
+            <div>
+              <h5 className="text-lg font-semibold mt-4 mb-3">Rate-limited, retry-safe Stripe updates</h5>
+              <p>
+                All <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">Stripe</code> writes are <strong>serialized, throttled well below account limits</strong>, wrapped in timeouts, and retried with exponential backoff.
+              </p>
+              <CodeBlock
+                language="typescript"
+                filename="rate_limiting.ts"
+                code={`const stripeUpdateQueue = new PQueue({
+  concurrency: 1,
+  intervalCap: 1,
+  interval: 80
+});`}
+              />
+            </div>
+          </SpacerLine>
+
+          <SpacerLine>
+            <div>
+              <h5 className="text-lg font-semibold mt-4 mb-3">Billing-safe updates</h5>
+              <p>
+                Subscriptions are migrated using item-level updates with <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">proration_behavior: 'none'</code>, ensuring <strong>no surprise charges</strong> and <strong>safe re-runs</strong>.
+              </p>
+            </div>
+          </SpacerLine>
+
+          <SpacerLine>
+            <div>
+              <h5 className="text-lg font-semibold mt-4 mb-3">Explicit coupon policy handling</h5>
+              <p>
+                Coupons are treated as <strong>first-class constraints</strong>:
+              </p>
+              <ul className="list-disc list-inside space-y-1 ml-4 mt-2">
+                <li>A specific referral coupon is <strong>allowed and migrated</strong></li>
+                <li>All other coupons are <strong>intentionally skipped, logged, and tracked</strong></li>
+              </ul>
+            </div>
+          </SpacerLine>
+
+          <SpacerLine>
+            <div>
+              <h5 className="text-lg font-semibold mt-4 mb-3">Deterministic reconciliation</h5>
+              <p>
+                Before and after the migration, the script produces:
+              </p>
+              <ul className="list-disc list-inside space-y-1 ml-4 mt-2">
+                <li><code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">Stripe</code> subscription counts by status</li>
+                <li>Database subscription counts by status</li>
+                <li>An <strong>intersection view</strong> to surface mismatches between systems</li>
+              </ul>
+            </div>
+          </SpacerLine>
+
+          <SpacerLine>
+            <div>
+              <h5 className="text-lg font-semibold mt-4 mb-3">Operational traceability</h5>
+              <p>
+                Each run emits <strong>per-plan logs, a master summary, structured failure breakdowns</strong>, and analytics events for post-migration monitoring.
+              </p>
+            </div>
+          </SpacerLine>
+
+          <SpacerLine>
+            <div>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Outcome</h4>
+              <ul className="list-disc list-inside space-y-1 ml-4">
+                <li>Migrated legacy subscriptions with <strong>zero downtime or billing regressions</strong></li>
+                <li>Prevented production execution unless <strong>infra and configuration were correct</strong></li>
+                <li>Generated <strong>auditable reconciliation artifacts</strong> and follow-up workflows</li>
+                <li>Established a <strong>repeatable pattern</strong> for future <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">Stripe</code> plan migrations</li>
+              </ul>
+            </div>
+          </SpacerLine>
+
+          <SpacerLine>
+            <div>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Why This Matters</h4>
+              <p>
+                Billing migrations fail most often due to <strong>hidden state, operator error, or lack of observability</strong>. This project demonstrates how to treat high-risk data changes as <strong>controlled production operations</strong>—with guardrails, proofs, and clear exit paths.
+              </p>
+            </div>
+          </SpacerLine>
         </div>
       ),
     },
@@ -470,7 +601,7 @@ SELECT SLEEP(60);`}
   return (
     <section>
       <SectionContainer>
-        <h1 className="mb-8 text-2xl font-semibold tracking-tighter">Projects</h1>
+        <h1 className="mb-8 text-2xl font-semibold tracking-tighter">Technical Deep Dives</h1>
         <div className="space-y-4">
           {projects.map((project, index) => (
             <ProjectSection
