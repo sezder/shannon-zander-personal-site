@@ -584,15 +584,167 @@ SELECT SLEEP(60);`}
       ),
     },
     {
-      title: 'Churn Flow Project',
+      title: 'Churn & Retention Flow Implementation',
       content: (
         <div className="space-y-4">
-          <p>
-            Built a comprehensive churn flow system to manage customer subscription cancellations and retention workflows.
-          </p>
-          <p>
-            Implemented automated churn detection, cancellation flows, and retention strategies integrated with billing systems to reduce customer churn and improve retention rates.
-          </p>
+          <div>
+            <p className="text-neutral-600 dark:text-neutral-400 mb-4">
+              Implementing a product-designed retention funnel in a billing-critical system
+            </p>
+          </div>
+
+          <SpacerLine>
+            <div>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Context</h4>
+              <p>
+                Product redesigned our churn experience to move beyond a simple cancellation survey and introduce <strong>reason-based retention paths</strong>. Implementing this safely was non-trivial. Churn touches <strong>billing, refunds, lifecycle state, analytics, and user messaging</strong>, and mistakes here are costly.
+              </p>
+              <p>
+                My role was to implement the product-designed flow <strong>end to end</strong>, ensuring correctness across <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">Stripe</code>, backend state, and analytics.
+              </p>
+            </div>
+          </SpacerLine>
+
+          <SpacerLine>
+            <div>
+              <h4 className="text-xl font-semibold mb-3 mt-4">What I Implemented</h4>
+              <p>
+                I implemented a <strong>reason-driven churn funnel</strong> backed by centralized cancellation logic.
+              </p>
+              <p>
+                My scope included:
+              </p>
+              <ul className="list-disc list-inside space-y-1 ml-4 mt-2">
+                <li>Translating product designs into a <strong>deterministic frontend flow</strong></li>
+                <li>Enforcing <strong>eligibility rules</strong> to prevent invalid retention offers</li>
+                <li><strong>Centralizing cancellation behavior</strong> to avoid <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">Stripe</code> and database drift</li>
+                <li>Ensuring <strong>analytics and lifecycle state remained consistent</strong></li>
+              </ul>
+            </div>
+          </SpacerLine>
+
+          <SpacerLine>
+            <div>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Frontend Implementation</h4>
+              
+              <div className="space-y-4">
+                <div>
+                  <h5 className="text-lg font-semibold mt-4 mb-3">Cancellation Survey</h5>
+                  <p>
+                    Users enter the flow from <strong>Settings → Manage Subscription</strong>.
+                  </p>
+                  <p>
+                    The survey collects a cancellation reason defined by product. Each reason <strong>deterministically routes</strong> to either a retention screen or direct cancellation.
+                  </p>
+                  <p className="mt-3">
+                    Key implementation details:
+                  </p>
+                  <ul className="list-disc list-inside space-y-1 ml-4 mt-2">
+                    <li>Reasons <strong>shuffled to reduce bias</strong></li>
+                    <li>Optional free-text feedback</li>
+                    <li><strong>Continue button disabled</strong> until a reason is selected</li>
+                    <li><strong>No forced loops or dark patterns</strong></li>
+                  </ul>
+                </div>
+
+                <SpacerLine>
+                  <div>
+                    <h5 className="text-lg font-semibold mt-4 mb-3">Retention Screens</h5>
+                    <p>
+                      I implemented multiple retention paths, each <strong>guarded by eligibility checks</strong>:
+                    </p>
+                    <ul className="list-disc list-inside space-y-1 ml-4 mt-2">
+                      <li>Switch to filing-only for users no longer freelancing</li>
+                      <li>Upgrade to Premium for complex tax cases</li>
+                      <li>Complimentary Premium for reported product mistakes</li>
+                      <li>Payment pause for eligible monthly subscribers</li>
+                      <li>Direct remediation for deduction tracking issues</li>
+                    </ul>
+                    <p className="mt-3">
+                      If a user is not eligible, the flow <strong>falls back to direct cancellation</strong>.
+                    </p>
+                  </div>
+                </SpacerLine>
+              </div>
+            </div>
+          </SpacerLine>
+
+          <SpacerLine>
+            <div>
+              <h4 className="text-xl font-semibold mb-3 mt-4">State and Analytics</h4>
+              <p>
+                I implemented <strong>centralized state</strong> to track:
+              </p>
+              <ul className="list-disc list-inside space-y-1 ml-4 mt-2">
+                <li>Selected churn reason and feedback</li>
+                <li>Submission and loading state</li>
+                <li>Retention versus cancellation outcomes</li>
+              </ul>
+              <p className="mt-3">
+                Analytics are emitted at each step, enabling <strong>clean churn and retention funnels</strong> without backend inference.
+              </p>
+            </div>
+          </SpacerLine>
+
+          <SpacerLine>
+            <div>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Backend: Cancellation as Infrastructure</h4>
+              <p>
+                All cancellation paths funnel into a <strong>single method</strong>:
+              </p>
+              <CodeBlock
+                language="typescript"
+                filename="payment_service.ts"
+                code={`PaymentService.cancelStripeSubscription()`}
+              />
+              <p className="mt-3">
+                This method handles:
+              </p>
+              <ul className="list-disc list-inside space-y-1 ml-4 mt-2">
+                <li><strong>Immediate cancellation</strong> for unpaid or delinquent subscriptions</li>
+                <li><strong>Cancel-at-period-end behavior</strong> for active subscriptions</li>
+                <li><code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">Stripe</code> API interactions</li>
+                <li>Database and lifecycle updates</li>
+              </ul>
+              <p className="mt-3">
+                Centralizing this logic ensures new churn experiments do not <strong>compromise billing correctness</strong>.
+              </p>
+            </div>
+          </SpacerLine>
+
+          <SpacerLine>
+            <div>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Stripe and Lifecycle Consistency</h4>
+              <p>
+                <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">Stripe</code> webhooks update subscription state and trigger cancellation emails only when cancellation is newly set.
+              </p>
+              <p className="mt-3">
+                When churn occurs:
+              </p>
+              <ul className="list-disc list-inside space-y-1 ml-4 mt-2">
+                <li>Subscription status updates in the database</li>
+                <li>User lifecycle flags and analytics identity are updated</li>
+                <li>Messaging tags remain <strong>consistent across systems</strong></li>
+              </ul>
+            </div>
+          </SpacerLine>
+
+          <SpacerLine>
+            <div>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Why This Matters</h4>
+              <p>
+                This project reflects how I operate as a <strong>senior product engineer</strong>:
+              </p>
+              <ul className="list-disc list-inside space-y-1 ml-4 mt-2">
+                <li>I execute product designs faithfully while <strong>hardening system boundaries</strong></li>
+                <li>I treat <strong>billing and churn as infrastructure, not UI</strong></li>
+                <li>I <strong>centralize high-risk logic</strong> to prevent long-term maintenance debt</li>
+              </ul>
+              <p className="mt-3">
+                The result is a churn system that <strong>supports retention without sacrificing correctness or user trust</strong>.
+              </p>
+            </div>
+          </SpacerLine>
         </div>
       ),
     },
