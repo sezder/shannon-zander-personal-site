@@ -832,7 +832,7 @@ SELECT SLEEP(60);`}
         <h1 className="mb-8 text-2xl font-semibold tracking-tighter">Technical Deep Dives</h1>
         <div className="space-y-0">
           {projects.map((project, index) => (
-            <div key={index} className={index > 0 ? 'border-t-2 border-neutral-300 dark:border-neutral-700 pt-8 mt-8' : ''}>
+            <div key={index} className={index > 0 ? 'border-t border-black dark:border-white pt-8 mt-8' : ''}>
               <ProjectSection
                 title={project.title}
                 isOpen={openSections.has(index)}
