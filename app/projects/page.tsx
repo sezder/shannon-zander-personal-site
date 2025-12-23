@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { SectionContainer } from '../components/section-container'
 import { CodeBlock } from '../components/code-block'
 import { SpacerLine } from '../components/spacer-line'
@@ -35,7 +36,7 @@ function ProjectSection({
   children: React.ReactNode
 }) {
   return (
-    <div className="bg-white dark:bg-neutral-900 rounded-lg border border-neutral-200 dark:border-neutral-800 mb-4">
+    <div className="bg-white dark:bg-neutral-900 rounded-lg mb-4">
       <button
         onClick={onToggle}
         className="w-full flex items-center justify-between p-4 text-left hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
@@ -50,6 +51,63 @@ function ProjectSection({
           {children}
         </div>
       )}
+    </div>
+  )
+}
+
+function ImageCarousel() {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const images = [
+    { src: '/survey.png', alt: 'Cancellation survey screen' },
+    { src: '/switch-to-tax-filing.png', alt: 'Switch to standard tax filing offer screen' },
+    { src: '/timeline.png', alt: 'Payment pause offer timeline screen' },
+  ]
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length)
+    }, 3000) // Auto-advance every 3 seconds
+
+    return () => clearInterval(interval)
+  }, [images.length])
+
+  return (
+    <div className="relative">
+      <div className="relative overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-800">
+        <div
+          className="flex transition-transform duration-500 ease-in-out"
+          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+        >
+          {images.map((image, index) => (
+            <div key={index} className="min-w-full flex-shrink-0">
+              <Image
+                src={image.src}
+                alt={image.alt}
+                width={1080}
+                height={1920}
+                className="w-full h-auto max-h-[70vh] object-contain mx-auto"
+                unoptimized
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      {/* Dot indicators */}
+      <div className="flex justify-center gap-2 mt-4">
+        {images.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentIndex(index)}
+            className={`w-2 h-2 rounded-full transition-all ${
+              index === currentIndex
+                ? 'bg-black dark:bg-white'
+                : 'bg-neutral-400 dark:bg-neutral-600 hover:shadow-[0_0_0_2px_black] dark:hover:shadow-[0_0_0_2px_white]'
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
     </div>
   )
 }
@@ -620,6 +678,24 @@ SELECT SLEEP(60);`}
                 <li><strong>Centralizing cancellation behavior</strong> to avoid <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">Stripe</code> and database drift</li>
                 <li>Ensuring <strong>analytics and lifecycle state remained consistent</strong></li>
               </ul>
+              <div className="mt-6">
+                {/* Combined image for medium screens and wider */}
+                <div className="hidden md:block">
+                  <Image
+                    src="/churn_flow.png"
+                    alt="Keeper churn flow showing three screens: cancellation survey, switch to standard tax filing offer, and payment pause offer"
+                    width={1920}
+                    height={1440}
+                    className="rounded-lg border border-neutral-200 dark:border-neutral-800 w-full h-auto"
+                    unoptimized
+                  />
+                </div>
+                
+                {/* Carousel for smaller screens */}
+                <div className="block md:hidden">
+                  <ImageCarousel />
+                </div>
+              </div>
             </div>
           </SpacerLine>
 
