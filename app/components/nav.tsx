@@ -43,7 +43,9 @@ export function Navbar() {
                 {isActive && (
                   <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-neutral-900 dark:bg-neutral-100" />
                 )}
-                <span className="absolute inset-0 bg-neutral-100 dark:bg-neutral-900 rounded-md opacity-0 hover:opacity-100 transition-opacity -z-0" />
+                {!isActive && (
+                  <span className="absolute inset-0 bg-neutral-100 dark:bg-neutral-900 rounded-md opacity-0 hover:opacity-100 transition-opacity -z-0" />
+                )}
               </Link>
             )
           })}
