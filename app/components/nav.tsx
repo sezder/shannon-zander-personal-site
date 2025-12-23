@@ -8,7 +8,7 @@ const navItems = {
     name: 'Home',
   },
   '/projects': {
-    name: 'Projects',
+    name: 'Technical Deep Dives',
   },
   '/working-with-me': {
     name: "Hiring?",

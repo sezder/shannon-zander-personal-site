@@ -39,7 +39,7 @@ function ProjectSection({
     <div className="bg-white dark:bg-neutral-900 rounded-lg mb-4">
       <button
         onClick={onToggle}
-        className="w-full flex items-center justify-between p-4 text-left hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
+        className="w-full flex items-center justify-between p-4 text-left rounded-lg cursor-pointer"
       >
         <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
           {title}
@@ -830,16 +830,17 @@ SELECT SLEEP(60);`}
     <section>
       <SectionContainer>
         <h1 className="mb-8 text-2xl font-semibold tracking-tighter">Technical Deep Dives</h1>
-        <div className="space-y-4">
+        <div className="space-y-0">
           {projects.map((project, index) => (
-            <ProjectSection
-              key={index}
-              title={project.title}
-              isOpen={openSections.has(index)}
-              onToggle={() => toggleSection(index)}
-            >
-              {project.content}
-            </ProjectSection>
+            <div key={index} className={index > 0 ? 'border-t-2 border-neutral-300 dark:border-neutral-700 pt-8 mt-8' : ''}>
+              <ProjectSection
+                title={project.title}
+                isOpen={openSections.has(index)}
+                onToggle={() => toggleSection(index)}
+              >
+                {project.content}
+              </ProjectSection>
+            </div>
           ))}
         </div>
       </SectionContainer>
