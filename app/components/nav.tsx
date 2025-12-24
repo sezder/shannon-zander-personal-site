@@ -8,7 +8,7 @@ const navItems = {
   '/': {
     name: 'Home',
   },
-  '/projects': {
+  '/technical-deep-dives': {
     name: 'Technical Deep Dives',
   },
   '/hiring': {

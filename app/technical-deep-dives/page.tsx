@@ -867,7 +867,7 @@ SELECT SLEEP(60);`}
   return (
     <section>
       <SectionContainer>
-        <h1 className="mb-8 text-2xl font-semibold tracking-tighter">Technical Deep Dives</h1>
+        <h1 className="mb-8 text-2xl md:text-3xl font-semibold tracking-tighter">Technical Deep Dives</h1>
         <div className="space-y-0">
           {projects.map((project, index) => (
             <div key={index} className={index > 0 ? 'border-t border-black dark:border-white py-6 my-4' : 'py-6'}>

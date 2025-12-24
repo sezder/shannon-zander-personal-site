@@ -116,7 +116,7 @@ export default function Page() {
                 <span className="text-neutral-500 dark:text-neutral-400 text-xs">Photo</span>
               </div>
             </div>
-            <h1 className="text-2xl font-semibold tracking-tighter">
+            <h1 className="text-2xl md:text-3xl font-semibold tracking-tighter">
               Shannon Zander
             </h1>
           </div>
