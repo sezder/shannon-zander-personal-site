@@ -11,7 +11,7 @@ const navItems = {
   '/projects': {
     name: 'Technical Deep Dives',
   },
-  '/working-with-me': {
+  '/hiring': {
     name: "Hiring?",
   },
 }
