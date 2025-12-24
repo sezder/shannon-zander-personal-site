@@ -118,8 +118,7 @@ function ImageCarousel() {
                 width={1080}
                 height={1920}
                 className="w-full h-auto max-h-[70vh] object-contain mx-auto"
-                sizes="100vw"
-                quality={85}
+                unoptimized
               />
             </div>
           ))}
@@ -726,8 +725,7 @@ SELECT SLEEP(60);`}
                     width={1920}
                     height={1440}
                     className="rounded-lg border border-neutral-200 dark:border-neutral-800 w-full h-auto"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
-                    quality={85}
+                    unoptimized
                   />
                 </div>
                 
@@ -869,7 +867,7 @@ SELECT SLEEP(60);`}
   return (
     <section>
       <SectionContainer>
-        <h1 className="mb-8 text-2xl md:text-3xl font-semibold tracking-tighter">Technical Deep Dives</h1>
+        <h1 className="mb-8 text-2xl font-semibold tracking-tighter">Technical Deep Dives</h1>
         <div className="space-y-0">
           {projects.map((project, index) => (
             <div key={index} className={index > 0 ? 'border-t border-black dark:border-white py-6 my-4' : 'py-6'}>

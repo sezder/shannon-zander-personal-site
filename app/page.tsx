@@ -145,6 +145,8 @@ export default function Page() {
                       width={32}
                       height={32}
                       className="object-contain w-full h-full"
+                      priority
+                      sizes="32px"
                     />
                   }
                   company="KeeperTax"
@@ -160,6 +162,8 @@ export default function Page() {
                       width={32}
                       height={32}
                       className="object-contain w-full h-full"
+                      priority
+                      sizes="32px"
                     />
                   }
                   company="Revere CRE"
@@ -184,6 +188,8 @@ export default function Page() {
                       width={28}
                       height={28}
                       className="object-contain w-full h-full"
+                      priority
+                      sizes="28px"
                     />
                   }
                   title="Honors in Major Study (Philosophy & Classics)"
@@ -199,6 +205,7 @@ export default function Page() {
                       width={28}
                       height={28}
                       className="object-contain w-full h-full"
+                      sizes="28px"
                     />
                   }
                   title="Louis B. Perry Research Grant"
@@ -214,6 +221,7 @@ export default function Page() {
                       width={28}
                       height={28}
                       className="object-contain w-full h-full rounded-full"
+                      sizes="28px"
                     />
                   }
                   title="Outstanding Leadership Award"
