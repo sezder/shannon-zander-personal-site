@@ -34,7 +34,7 @@ export function Navbar() {
                   key={path}
                   href={path}
                   className={`
-                    relative px-3 py-1.5 text-sm font-medium transition-all
+                    group relative px-3 py-1.5 text-sm font-medium transition-all
                     ${isActive
                       ? 'text-neutral-900 dark:text-neutral-100'
                       : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100'
@@ -46,7 +46,7 @@ export function Navbar() {
                     <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-neutral-900 dark:bg-neutral-100" />
                   )}
                   {!isActive && (
-                    <span className="absolute inset-0 bg-neutral-100 dark:bg-neutral-900 rounded-md opacity-0 hover:opacity-100 transition-opacity -z-0" />
+                    <span className="absolute inset-0 bg-neutral-100 dark:bg-neutral-900 rounded-md opacity-0 group-hover:opacity-100 transition-opacity -z-0" />
                   )}
                 </Link>
               )
