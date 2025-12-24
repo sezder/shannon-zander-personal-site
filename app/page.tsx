@@ -72,9 +72,16 @@ export default function Page() {
     <>
       <section>
         <SectionContainer>
-          <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
-            Shannon Zander
-          </h1>
+          <div className="flex items-center gap-4 mb-8">
+            <div className="w-16 h-16 rounded-full bg-neutral-200 dark:bg-neutral-800 flex items-center justify-center flex-shrink-0">
+              <div className="w-14 h-14 rounded-full bg-neutral-300 dark:bg-neutral-700 flex items-center justify-center">
+                <span className="text-neutral-500 dark:text-neutral-400 text-xs">Photo</span>
+              </div>
+            </div>
+            <h1 className="text-2xl font-semibold tracking-tighter">
+              Shannon Zander
+            </h1>
+          </div>
           <p className="mb-4">
             I'm a software engineer focused on <strong>billing systems, data migrations, and production safety at scale</strong>.
           </p>
