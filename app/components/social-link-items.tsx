@@ -4,14 +4,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelope, faDownload } from '@fortawesome/free-solid-svg-icons'
 
-function WellfoundIcon() {
+function WellfoundIcon({ isNavbar = false }: { isNavbar?: boolean }) {
+  const iconClasses = isNavbar 
+    ? "text-neutral-500 dark:text-neutral-400 group-hover:text-neutral-700 dark:group-hover:text-neutral-300 transition-colors"
+    : "text-black dark:text-white"
   return (
     <svg
       width="20"
       height="20"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
-      className="text-black dark:text-white"
+      className={iconClasses}
     >
       <path
         d="M23.998 8.128c0.063 -1.379 -1.612 -2.376 -2.795 -1.664 -1.23 0.598 -1.322 2.52 -0.156 3.234 1.2 0.862 2.995 -0.09 2.951 -1.57zm0 7.748c0.063 -1.38 -1.612 -2.377 -2.795 -1.665 -1.23 0.598 -1.322 2.52 -0.156 3.234 1.2 0.863 2.995 -0.09 2.951 -1.57zm-20.5 1.762L0 6.364h3.257l2.066 8.106 2.245 -8.106h3.267l2.244 8.106 2.065 -8.106h3.257l-3.54 11.274H11.39c-0.73 -2.713 -1.46 -5.426 -2.188 -8.14l-2.233 8.14H3.5z"
@@ -24,14 +27,23 @@ function WellfoundIcon() {
 interface SocialLinkItemsProps {
   tooltipPosition?: 'right' | 'top'
   linkClassName?: string
+  variant?: 'navbar' | 'footer'
 }
 
-export function SocialLinkItems({ tooltipPosition = 'right', linkClassName = '' }: SocialLinkItemsProps) {
+export function SocialLinkItems({ tooltipPosition = 'right', linkClassName = '', variant = 'footer' }: SocialLinkItemsProps) {
+  const isNavbar = variant === 'navbar'
+  
   const tooltipClasses = tooltipPosition === 'right' 
     ? 'absolute right-full mr-3 px-2 py-1 text-xs font-medium text-white bg-neutral-900 dark:bg-neutral-100 dark:text-neutral-900 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 group-focus:opacity-100 pointer-events-none transition-opacity'
     : 'absolute bottom-full mb-3 px-2 py-1 text-xs font-medium text-white bg-neutral-900 dark:bg-neutral-100 dark:text-neutral-900 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 group-focus:opacity-100 pointer-events-none transition-opacity'
 
-  const baseLinkClasses = "group relative w-10 h-10 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex items-center justify-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
+  const baseLinkClasses = isNavbar
+    ? "group relative w-8 h-8 flex items-center justify-center transition-opacity"
+    : "group relative w-10 h-10 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex items-center justify-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
+
+  const iconClasses = isNavbar
+    ? "w-5 h-5 text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-300 transition-colors"
+    : "w-5 h-5 text-black dark:text-white"
 
   return (
     <>
@@ -45,7 +57,7 @@ export function SocialLinkItems({ tooltipPosition = 'right', linkClassName = '' 
       >
         <FontAwesomeIcon
           icon={faGithub}
-          className="w-5 h-5 text-black dark:text-white"
+          className={iconClasses}
           aria-hidden="true"
         />
         <span className={tooltipClasses}>
@@ -62,7 +74,7 @@ export function SocialLinkItems({ tooltipPosition = 'right', linkClassName = '' 
       >
         <FontAwesomeIcon
           icon={faLinkedin}
-          className="w-5 h-5 text-black dark:text-white"
+          className={iconClasses}
           aria-hidden="true"
         />
         <span className={tooltipClasses}>
@@ -77,7 +89,7 @@ export function SocialLinkItems({ tooltipPosition = 'right', linkClassName = '' 
         aria-label="Wellfound"
         title=""
       >
-        <WellfoundIcon />
+        <WellfoundIcon isNavbar={isNavbar} />
         <span className={tooltipClasses}>
           Wellfound
         </span>
@@ -90,7 +102,7 @@ export function SocialLinkItems({ tooltipPosition = 'right', linkClassName = '' 
       >
         <FontAwesomeIcon
           icon={faEnvelope}
-          className="w-5 h-5 text-black dark:text-white"
+          className={iconClasses}
           aria-hidden="true"
         />
         <span className={tooltipClasses}>
@@ -106,7 +118,7 @@ export function SocialLinkItems({ tooltipPosition = 'right', linkClassName = '' 
       >
         <FontAwesomeIcon
           icon={faDownload}
-          className="w-5 h-5 text-black dark:text-white"
+          className={iconClasses}
           aria-hidden="true"
         />
         <span className={tooltipClasses}>
