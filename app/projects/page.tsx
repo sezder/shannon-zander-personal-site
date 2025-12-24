@@ -26,11 +26,13 @@ function ChevronIcon({ isOpen }: { isOpen: boolean }) {
 
 function ProjectSection({
   title,
+  skills,
   isOpen,
   onToggle,
   children,
 }: {
   title: string
+  skills?: string[]
   isOpen: boolean
   onToggle: () => void
   children: React.ReactNode
@@ -48,6 +50,18 @@ function ProjectSection({
       </button>
       {isOpen && (
         <div className="px-4 pb-4 text-neutral-700 dark:text-neutral-300">
+          {skills && skills.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mb-4">
+              {skills.map((skill, index) => (
+                <span
+                  key={index}
+                  className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-white dark:bg-white text-black dark:text-black border border-neutral-300 dark:border-neutral-300"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          )}
           {children}
         </div>
       )}
@@ -128,6 +142,7 @@ export default function ProjectsPage() {
   const projects = [
     {
       title: 'Partitioning a 2B-Row Table: Why the Base Table Still Won',
+      skills: ['MySQL', 'Database Optimization', 'Performance Testing', 'SQL'],
       content: (
         <div className="space-y-4">
           <div>
@@ -259,6 +274,7 @@ export default function ProjectsPage() {
     },
     {
       title: 'Production-Safe Large-Scale Data Migration (≈693M Rows)',
+      skills: ['MySQL', 'TypeScript', 'GCP', 'CloudSQL', 'Data Migration', 'Database Engineering'],
       content: (
         <div className="space-y-4">
           <div>
@@ -473,6 +489,7 @@ SELECT SLEEP(60);`}
     },
     {
       title: 'Stripe Legacy Plan Migration',
+      skills: ['TypeScript', 'Stripe API', 'Terraform', 'Kubernetes', 'Database Engineering'],
       content: (
         <div className="space-y-4">
           <div>
@@ -617,6 +634,7 @@ SELECT SLEEP(60);`}
     },
     {
       title: 'Revere Expansion of TAM by 300% through Investor Dashboard',
+      skills: ['React', 'TypeScript', 'Data Visualization', 'Analytics'],
       content: (
         <div className="space-y-4">
           <p>
@@ -630,6 +648,7 @@ SELECT SLEEP(60);`}
     },
     {
       title: 'Relay Connections Handler',
+      skills: ['GraphQL', 'Relay', 'TypeScript'],
       content: (
         <div className="space-y-4">
           <p>
@@ -643,6 +662,7 @@ SELECT SLEEP(60);`}
     },
     {
       title: 'Churn & Retention Flow Implementation',
+      skills: ['TypeScript', 'React', 'Stripe', 'Database Engineering'],
       content: (
         <div className="space-y-4">
           <div>
@@ -835,6 +855,7 @@ SELECT SLEEP(60);`}
             <div key={index} className={index > 0 ? 'border-t border-black dark:border-white pt-8 mt-8' : ''}>
               <ProjectSection
                 title={project.title}
+                skills={project.skills}
                 isOpen={openSections.has(index)}
                 onToggle={() => toggleSection(index)}
               >
