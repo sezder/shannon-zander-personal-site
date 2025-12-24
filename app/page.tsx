@@ -3,37 +3,70 @@ import { SectionContainer } from './components/section-container'
 
 function CompanyIcon({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-12 h-12 rounded-lg bg-neutral-200 dark:bg-neutral-800 flex items-center justify-center flex-shrink-0">
-      <div className="w-10 h-10 rounded-lg bg-white dark:bg-neutral-900 flex items-center justify-center p-1">
+    <div className="w-10 h-10 rounded-lg bg-neutral-200/50 dark:bg-neutral-800/50 flex items-center justify-center flex-shrink-0">
+      <div className="w-9 h-9 rounded-lg bg-white dark:bg-neutral-900 flex items-center justify-center p-1">
         {children}
       </div>
     </div>
   )
 }
 
-function ExperienceItem({ 
+function AwardIcon({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="w-7 h-7 flex items-center justify-center flex-shrink-0">
+      {children}
+    </div>
+  )
+}
+
+type Role = {
+  title: string
+  date: string
+}
+
+function RoleItem({ title, date, isLast = false, isSingleRole = false }: Role & { isLast?: boolean; isSingleRole?: boolean }) {
+  return (
+    <div className={`pl-14 ${isLast && !isSingleRole ? 'pt-0.5 pb-1.5' : isSingleRole ? 'py-0.5' : 'py-1.5'}`}>
+      <p className="text-sm text-neutral-900 dark:text-neutral-100">
+        <span className="font-medium">{title}</span>
+      </p>
+      <p className={`text-xs text-neutral-400 dark:text-neutral-500 ${isSingleRole ? 'mt-0' : 'mt-0.5'}`}>
+        {date}
+      </p>
+    </div>
+  )
+}
+
+function CompanyExperience({ 
   icon, 
-  title, 
   company, 
-  date 
+  roles
 }: { 
   icon: React.ReactNode
-  title: string
   company: string
-  date: string 
+  roles: Role[]
 }) {
+  const isSingleRole = roles.length === 1
   return (
-    <div className="bg-white dark:bg-neutral-900 rounded-lg p-4 border-b border-neutral-200 dark:border-neutral-800 h-20 flex items-center">
-      <div className="flex items-center gap-3 w-full">
+    <div className={`bg-white dark:bg-neutral-900 rounded-lg ${isSingleRole ? 'py-2 px-3' : 'p-3'}`}>
+      <div className="flex items-center gap-3 mb-1">
         <CompanyIcon>{icon}</CompanyIcon>
         <div className="flex-1 min-w-0">
-          <p className="text-sm text-neutral-900 dark:text-neutral-100">
-            {title} at <strong>{company}</strong>
-          </p>
-          <p className="text-xs text-neutral-500 dark:text-neutral-500 mt-1">
-            {date}
+          <p className="text-sm font-semibold text-neutral-950 dark:text-neutral-50">
+            {company}
           </p>
         </div>
+      </div>
+      <div>
+        {roles.map((role, index) => (
+          <RoleItem 
+            key={index} 
+            title={role.title} 
+            date={role.date} 
+            isLast={index === roles.length - 1}
+            isSingleRole={isSingleRole}
+          />
+        ))}
       </div>
     </div>
   )
@@ -43,27 +76,32 @@ function AwardItem({
   icon, 
   title, 
   organization, 
-  date 
+  date,
+  isLast = false
 }: { 
   icon: React.ReactNode
   title: string
   organization: string
-  date: string 
+  date: string
+  isLast?: boolean
 }) {
   return (
-    <div className="bg-white dark:bg-neutral-900 rounded-lg p-4 border-b border-neutral-200 dark:border-neutral-800 h-20 flex items-center">
-      <div className="flex items-center gap-3 w-full">
-        <CompanyIcon>{icon}</CompanyIcon>
-        <div className="flex-1 min-w-0">
-          <p className="text-sm text-neutral-900 dark:text-neutral-100">
-            {title} at <strong>{organization}</strong>
-          </p>
-          <p className="text-xs text-neutral-500 dark:text-neutral-500 mt-1">
-            {date}
-          </p>
+    <>
+      <div className="py-2.5 flex items-center">
+        <div className="flex items-center gap-3 w-full">
+          <AwardIcon>{icon}</AwardIcon>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm text-neutral-900 dark:text-neutral-100">
+              {title} at <strong className="font-semibold text-neutral-950 dark:text-neutral-50">{organization}</strong>
+            </p>
+            <p className="text-xs text-neutral-400 dark:text-neutral-500 mt-0.5">
+              {date}
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+      {!isLast && <div className="h-px bg-neutral-200 dark:bg-neutral-800" />}
+    </>
   )
 }
 
@@ -74,7 +112,7 @@ export default function Page() {
         <SectionContainer>
           <div className="flex items-center gap-4 mb-8">
             <div className="w-16 h-16 rounded-full bg-neutral-200 dark:bg-neutral-800 flex items-center justify-center flex-shrink-0">
-              <div className="w-14 h-14 rounded-full bg-neutral-300 dark:bg-neutral-700 flex items-center justify-center">
+              <div className="w-[60px] h-[60px] rounded-full bg-neutral-300 dark:bg-neutral-700 flex items-center justify-center">
                 <span className="text-neutral-500 dark:text-neutral-400 text-xs">Photo</span>
               </div>
             </div>
@@ -93,13 +131,13 @@ export default function Page() {
       
       <section className="w-screen mt-8">
         <div className="bg-section-bg dark:bg-neutral-950 py-6 md:py-8">
-          <SectionContainer className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="flex flex-col justify-center">
-              <h2 className="text-2xl font-semibold mb-6 text-neutral-900 dark:text-neutral-100">
+          <SectionContainer className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            <div className="flex flex-col h-full">
+              <h2 className="text-2xl font-semibold mb-6 mt-2 text-neutral-900 dark:text-neutral-100">
                 Working experience
               </h2>
-              <div className="space-y-3">
-                <ExperienceItem
+              <div className="space-y-3 flex-1">
+                <CompanyExperience
                   icon={
                     <Image
                       src="/keepertax-logo.png"
@@ -109,11 +147,12 @@ export default function Page() {
                       className="object-contain w-full h-full"
                     />
                   }
-                  title="Software Engineer II"
                   company="KeeperTax"
-                  date="May 2024 - Current"
+                  roles={[
+                    { title: 'Software Engineer II', date: 'May 2024 - Current' }
+                  ]}
                 />
-                <ExperienceItem
+                <CompanyExperience
                   icon={
                     <Image
                       src="/revere-cre-icon.png"
@@ -123,73 +162,64 @@ export default function Page() {
                       className="object-contain w-full h-full"
                     />
                   }
-                  title="Software Engineer"
                   company="Revere CRE"
-                  date="Jan 2023 - April 2024"
-                />
-                <ExperienceItem
-                  icon={
-                    <Image
-                      src="/revere-cre-icon.png"
-                      alt="Revere CRE icon"
-                      width={32}
-                      height={32}
-                      className="object-contain w-full h-full"
-                    />
-                  }
-                  title="Junior Software Engineer"
-                  company="Revere CRE"
-                  date="May 2022 - Dec 2022"
+                  roles={[
+                    { title: 'Software Engineer', date: 'Jan 2023 - April 2024' },
+                    { title: 'Junior Software Engineer', date: 'May 2022 - Dec 2022' }
+                  ]}
                 />
               </div>
             </div>
             
-            <div className="flex flex-col justify-center">
-              <h2 className="text-2xl font-semibold mb-6 text-neutral-900 dark:text-neutral-100">
+            <div className="flex flex-col h-full">
+              <h2 className="text-2xl font-semibold mb-6 mt-2 text-neutral-900 dark:text-neutral-100">
                 Awards & Recognition
               </h2>
-              <div className="space-y-3">
+              <div className="space-y-2 flex-1 lg:space-y-0 lg:flex lg:flex-col lg:justify-between">
                 <AwardItem
                   icon={
                     <Image
                       src="/whitman-college-seal.png"
                       alt="Whitman College seal"
-                      width={32}
-                      height={32}
+                      width={28}
+                      height={28}
                       className="object-contain w-full h-full"
                     />
                   }
                   title="Honors in Major Study (Philosophy & Classics)"
                   organization="Whitman College"
                   date="2019"
+                  isLast={false}
                 />
                 <AwardItem
                   icon={
                     <Image
                       src="/whitman-college-seal.png"
                       alt="Whitman College seal"
-                      width={32}
-                      height={32}
+                      width={28}
+                      height={28}
                       className="object-contain w-full h-full"
                     />
                   }
                   title="Louis B. Perry Research Grant"
                   organization="Whitman College"
                   date="2018"
+                  isLast={false}
                 />
                 <AwardItem
                   icon={
                     <Image
                       src="/aswc-logo.png"
                       alt="ASWC logo"
-                      width={32}
-                      height={32}
-                      className="object-contain w-full h-full"
+                      width={28}
+                      height={28}
+                      className="object-contain w-full h-full rounded-full"
                     />
                   }
                   title="Outstanding Leadership Award"
                   organization="Associated Students of Whitman College"
                   date="2016"
+                  isLast={true}
                 />
               </div>
             </div>
