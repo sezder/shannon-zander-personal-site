@@ -225,51 +225,63 @@ export default function Page() {
             </div>
           </SectionContainer>
           <SectionContainer className="mt-8">
-            <div className="bg-white dark:bg-neutral-900 rounded-lg p-6">
+            <div>
               <h2 className="mb-6 text-xl font-semibold tracking-tight">Skills</h2>
-              <div className="space-y-6">
+              <div className="space-y-5">
                 <div>
-                  <h3 className="mb-3 text-sm font-semibold text-neutral-700 dark:text-neutral-300 uppercase tracking-wide">
-                    Languages
+                  <p className="mb-2 text-xs md:text-sm text-neutral-400 dark:text-neutral-500">
+                    Backend-first product engineer with deep experience in data-heavy systems and billing infrastructure.
+                  </p>
+                  <h3 className="mb-1.5 text-xs md:text-sm font-semibold text-neutral-700 dark:text-neutral-300">
+                    Primary Languages
                   </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {['TypeScript', 'SQL', 'React', 'GraphQL (Relay)'].map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-3 py-1.5 text-sm font-medium text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700"
-                      >
-                        {skill}
-                      </span>
+                  <div className="flex flex-col md:flex-row md:flex-wrap gap-0 md:gap-1.5">
+                    {['TypeScript', 'SQL', 'React', 'GraphQL (Relay)'].map((skill, index) => (
+                      <div key={skill} className="md:contents">
+                        <span
+                          className={`block md:inline-block px-2 py-0 md:py-1 text-sm ${index === 0 ? 'font-normal text-neutral-700 dark:text-neutral-300' : 'font-normal text-neutral-500 dark:text-neutral-400'}`}
+                        >
+                          {skill}
+                        </span>
+                      </div>
                     ))}
                   </div>
                 </div>
                 <div>
-                  <h3 className="mb-3 text-sm font-semibold text-neutral-700 dark:text-neutral-300 uppercase tracking-wide">
-                    Systems
+                  <h3 className="mb-1.5 text-xs md:text-sm font-semibold text-neutral-700 dark:text-neutral-300">
+                    Infrastructure & Data
                   </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {['GCP', 'Terraform', 'Cloud SQL', 'BigQuery'].map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-3 py-1.5 text-sm font-medium text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700"
-                      >
-                        {skill}
-                      </span>
+                  <div className="flex flex-col md:flex-row md:flex-wrap gap-0 md:gap-1.5">
+                    {['GCP', 'Terraform', 'Cloud SQL', 'BigQuery'].map((skill, index) => (
+                      <div key={skill} className="md:contents">
+                        <span
+                          className={`block md:inline-block px-2 py-0 md:py-1 text-sm ${index === 0 ? 'font-normal text-neutral-700 dark:text-neutral-300' : 'font-normal text-neutral-500 dark:text-neutral-400'}`}
+                        >
+                          {skill}
+                        </span>
+                      </div>
                     ))}
                   </div>
                 </div>
                 <div>
-                  <h3 className="mb-3 text-sm font-semibold text-neutral-700 dark:text-neutral-300 uppercase tracking-wide">
-                    Domains
+                  <h3 className="mb-1.5 text-xs md:text-sm font-semibold text-neutral-700 dark:text-neutral-300">
+                    Product Domains
                   </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {['Stripe Billing', 'High-volume Production Data Migrations'].map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-3 py-1.5 text-sm font-medium text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-800 rounded-md border border-neutral-200 dark:border-neutral-700"
-                      >
-                        {skill}
-                      </span>
+                  <div className="flex flex-col md:flex-row md:flex-wrap gap-0 md:gap-1.5">
+                    {['Stripe Billing', 'High-volume Production Data Migrations'].map((skill, index) => (
+                      <div key={skill} className="md:contents">
+                        <span
+                          className={`block md:inline-block px-2 py-0 md:py-1 text-sm ${index === 0 ? 'font-normal text-neutral-700 dark:text-neutral-300' : 'font-normal text-neutral-500 dark:text-neutral-400'}`}
+                        >
+                          {skill === 'High-volume Production Data Migrations' ? (
+                            <>
+                              High-volume Production<br className="md:hidden" /> Data Migrations
+                            </>
+                          ) : (
+                            skill
+                          )}
+                        </span>
+                      </div>
                     ))}
                   </div>
                 </div>
