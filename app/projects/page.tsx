@@ -38,18 +38,36 @@ function ProjectSection({
   children: React.ReactNode
 }) {
   return (
-    <div className="bg-white dark:bg-neutral-900 rounded-lg mb-4">
+    <div className="bg-white dark:bg-neutral-900 rounded-lg">
       <button
         onClick={onToggle}
-        className="w-full flex items-center justify-between p-4 text-left rounded-lg cursor-pointer"
+        className={`w-full flex items-center justify-between text-left cursor-pointer transition-all duration-300 ease-in-out border-l-[3px] ${
+          isOpen 
+            ? 'border-black dark:border-white pl-[calc(1rem+3px)] pr-4 py-4' 
+            : 'border-transparent p-4 hover:bg-neutral-50 dark:hover:bg-neutral-800'
+        }`}
       >
-        <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+        <h3 className={`text-lg transition-all duration-300 ${
+          isOpen 
+            ? 'text-neutral-900 dark:text-neutral-100 font-bold' 
+            : 'text-neutral-700 dark:text-neutral-300 font-semibold'
+        }`}>
           {title}
         </h3>
         <ChevronIcon isOpen={isOpen} />
       </button>
-      {isOpen && (
-        <div className="px-4 pb-4 text-neutral-700 dark:text-neutral-300">
+      <div
+        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+          isOpen
+            ? 'max-h-[10000px] opacity-100 translate-y-0'
+            : 'max-h-0 opacity-0 -translate-y-2'
+        }`}
+      >
+        <div className={`pb-4 pr-4 pl-[calc(1rem+3px)] text-neutral-700 dark:text-neutral-300 border-l-[3px] transition-colors duration-300 ease-in-out ${
+          isOpen 
+            ? 'border-black dark:border-white' 
+            : 'border-transparent'
+        }`}>
           {skills && skills.length > 0 && (
             <div className="flex flex-wrap gap-1.5 mb-4">
               {skills.map((skill, index) => (
@@ -64,7 +82,7 @@ function ProjectSection({
           )}
           {children}
         </div>
-      )}
+      </div>
     </div>
   )
 }
@@ -141,17 +159,17 @@ export default function ProjectsPage() {
 
   const projects = [
     {
-      title: 'Partitioning a 2B-Row Table: Why the Base Table Still Won',
+      title: 'Partitioning a 2 bil-row table: why the base table still won',
       skills: ['MySQL', 'Database Optimization', 'Performance Testing', 'SQL'],
       content: (
         <div className="space-y-4">
           <div>
             <h4 className="text-xl font-semibold mb-3 mt-4">Overview</h4>
-            <h5 className="text-lg font-semibold mt-4 mb-3">The Question</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">The question</h5>
             <p>
               I evaluated whether an expenses table approaching <strong>approximately two billion rows</strong> should be migrated to a native MySQL partitioned design. Using production-shaped data and real workloads, I tested multiple partitioning strategies, composite index designs, and primary key orderings.
             </p>
-            <h5 className="text-lg font-semibold mt-4 mb-3">The Outcome</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">The outcome</h5>
             <p>
               The outcome was not that partitioning failed. Instead, the testing showed that even under aggressive optimization, the existing unpartitioned table remained <strong>highly competitive and, in several cases, superior</strong>. Based on these results, I chose to defer partitioning.
             </p>
@@ -159,19 +177,19 @@ export default function ProjectsPage() {
 
           <SpacerLine>
             <div>
-              <h4 className="text-xl font-semibold mb-3 mt-4">Background: Year-Based Tables</h4>
-            <h5 className="text-lg font-semibold mt-4 mb-3">The Previous Approach</h5>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Background: year-based tables</h4>
+            <h5 className="text-lg font-semibold mt-4 mb-3">The previous approach</h5>
             <p>
               Prior to this work, we used separate year-based tables such as <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">expenses_2022</code> and <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">expenses_2023</code> as a form of unofficial partitioning. While workable at smaller scale, this approach introduced increasing operational costs.
             </p>
-            <h5 className="text-lg font-semibold mt-4 mb-3">Operational Challenges</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">Operational challenges</h5>
             <ul className="list-disc list-inside space-y-1 ml-4 mt-2">
               <li>Applications required <strong>complex query logic</strong> to support cross-year access</li>
               <li><strong>Schema changes had to be coordinated</strong> across multiple tables</li>
               <li>MySQL could not perform <strong>native partition pruning</strong>, which forced manual routing logic in application code</li>
               <li>Over time, this also increased the <strong>risk of schema drift</strong></li>
             </ul>
-            <h5 className="text-lg font-semibold mt-4 mb-3">The Opportunity</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">The opportunity</h5>
             <p>
               Native partitioning was an attractive alternative if it could deliver both <strong>performance improvements and operational simplicity</strong>.
             </p>
@@ -180,19 +198,19 @@ export default function ProjectsPage() {
 
           <SpacerLine>
             <div>
-              <h4 className="text-xl font-semibold mb-3 mt-4">What I Tested</h4>
-            <h5 className="text-lg font-semibold mt-4 mb-3">Test Setup</h5>
+              <h4 className="text-xl font-semibold mb-3 mt-4">What I tested</h4>
+            <h5 className="text-lg font-semibold mt-4 mb-3">Test setup</h5>
             <p>
               Using approximately <strong>twenty million rows per table</strong> and representative users with roughly <strong>twenty-two thousand rows each</strong>, I benchmarked the following:
             </p>
-            <h5 className="text-lg font-semibold mt-4 mb-3">Test Configurations</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">Test configurations</h5>
             <ul className="list-disc list-inside space-y-1 ml-4">
               <li>The original unpartitioned table</li>
               <li>Year-partitioned tables with optimized composite indexes</li>
               <li>Multiple primary key orderings, including <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">(year, transaction_id)</code> and <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">(transaction_id, year)</code></li>
               <li>Mixed workloads including user-scoped reads, multi-year date range queries, complex filters, bulk and individual <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">UPDATE</code>s, and sequential <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">INSERT</code>s</li>
             </ul>
-            <h5 className="text-lg font-semibold mt-4 mb-3">Measurement Methodology</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">Measurement methodology</h5>
             <p>
               All tests were run with warm caches and measured using <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">EXPLAIN ANALYZE</code>.
             </p>
@@ -201,12 +219,12 @@ export default function ProjectsPage() {
 
           <SpacerLine>
             <div>
-              <h4 className="text-xl font-semibold mb-3 mt-4">Key Result</h4>
-            <h5 className="text-lg font-semibold mt-4 mb-3">Overall Finding</h5>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Key result</h4>
+            <h5 className="text-lg font-semibold mt-4 mb-3">Overall finding</h5>
             <p>
               Partitioning <strong>did not produce a clear, across-the-board performance improvement</strong>.
             </p>
-            <h5 className="text-lg font-semibold mt-4 mb-3">Detailed Analysis</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">Detailed analysis</h5>
             <p>
               Even with year-based partition pruning, carefully tuned composite indexes, and alternative primary key orderings, the unpartitioned table consistently performed within the same range and <strong>often performed better for critical queries</strong>.
             </p>
@@ -215,20 +233,20 @@ export default function ProjectsPage() {
 
           <SpacerLine>
             <div>
-              <h4 className="text-xl font-semibold mb-3 mt-4">Where the Base Table Remained Competitive</h4>
-            <h5 className="text-lg font-semibold mt-4 mb-3">User- and Date-Scoped <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">SELECT</code>s</h5>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Where the base table remained competitive</h4>
+            <h5 className="text-lg font-semibold mt-4 mb-3">User- and date-scoped <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">SELECT</code>s</h5>
             <p>
               For the dominant access pattern, user-scoped reads over date ranges, the base table was either <strong>faster or within ten to twenty milliseconds</strong> of the best-performing partitioned variant. <strong>Strong indexing on <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">(user_id, date)</code> significantly reduced</strong> the theoretical advantage of partition pruning.
             </p>
-            <h5 className="text-lg font-semibold mt-4 mb-3"><code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">UPDATE</code> Operations</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3"><code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">UPDATE</code> operations</h5>
             <p>
               <strong><code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">UPDATE</code> performance provided the strongest signal</strong>. One partitioned configuration degraded <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">UPDATE</code> operations <strong>from milliseconds to more than thirty seconds</strong>. Even the safer partitioned variants showed no meaningful improvement over the base table. The unpartitioned table remained <strong>predictable and stable</strong> under write load.
             </p>
-            <h6 className="text-sm font-medium mt-3 mb-1 text-neutral-600 dark:text-neutral-400">Key Insight</h6>
+            <h6 className="text-sm font-medium mt-3 mb-1 text-neutral-600 dark:text-neutral-400">Key insight</h6>
             <p>
               This reinforced an important conclusion: <strong>A well-indexed unpartitioned table can outperform a partitioned table with an imperfect primary key, even at large scale</strong>.
             </p>
-            <h5 className="text-lg font-semibold mt-4 mb-3"><code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">INSERT</code> Workloads</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3"><code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">INSERT</code> workloads</h5>
             <p>
               Sequential ingestion performance was comparable across all configurations. Partitioning did not provide a material advantage, and the base table handled sustained inserts without issue.
             </p>
@@ -238,18 +256,18 @@ export default function ProjectsPage() {
           <SpacerLine>
             <div>
               <h4 className="text-xl font-semibold mb-3 mt-4">Decision</h4>
-            <h5 className="text-lg font-semibold mt-4 mb-3">The Conventional Wisdom</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">The conventional wisdom</h5>
             <p>
               Partitioning is often treated as an obvious scalability step. In this case, <strong>the data showed otherwise</strong>.
             </p>
-            <h5 className="text-lg font-semibold mt-4 mb-3">What the Data Showed</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">What the data showed</h5>
             <ul className="list-disc list-inside space-y-1 ml-4 mt-2">
               <li><strong>Index design had a larger impact on performance than partitioning</strong></li>
               <li>Primary key ordering introduced meaningful risk</li>
               <li>The existing table already exhibited <strong>strong and predictable performance characteristics</strong></li>
               <li>Partitioning added <strong>new failure modes without delivering clear gains</strong></li>
             </ul>
-            <h5 className="text-lg font-semibold mt-4 mb-3">The Decision</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">The decision</h5>
             <p>
               Given these tradeoffs, I deferred partitioning because <strong>it was not justified by measured results</strong>.
             </p>
@@ -263,7 +281,7 @@ export default function ProjectsPage() {
             <p>
               After testing optimized composite indexes, multiple partitioning strategies, and different primary key orderings, the original unpartitioned table remained <strong>competitive, stable, and predictable</strong>.
             </p>
-            <h5 className="text-lg font-semibold mt-4 mb-3">Future Considerations</h5>
+            <h5 className="text-lg font-semibold mt-4 mb-3">Future considerations</h5>
             <p>
               Partitioning remains a viable future step. It will be revisited once it offers <strong>clear and measurable advantages</strong> over a well-designed base table.
             </p>
@@ -289,7 +307,7 @@ export default function ProjectsPage() {
 
           <SpacerLine>
             <div>
-              <h4 className="text-xl font-semibold mb-3 mt-4">Key Design Decisions</h4>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Key design decisions</h4>
             
             <div className="space-y-4">
               <div>
@@ -623,7 +641,7 @@ SELECT SLEEP(60);`}
 
           <SpacerLine>
             <div>
-              <h4 className="text-xl font-semibold mb-3 mt-4">Why This Matters</h4>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Why this matters</h4>
               <p>
                 Billing migrations fail most often due to <strong>hidden state, operator error, or lack of observability</strong>. This project demonstrates how to treat high-risk data changes as <strong>controlled production operations</strong>—with guardrails, proofs, and clear exit paths.
               </p>
@@ -685,7 +703,7 @@ SELECT SLEEP(60);`}
 
           <SpacerLine>
             <div>
-              <h4 className="text-xl font-semibold mb-3 mt-4">What I Implemented</h4>
+              <h4 className="text-xl font-semibold mb-3 mt-4">What I implemented</h4>
               <p>
                 I implemented a <strong>reason-driven churn funnel</strong> backed by centralized cancellation logic.
               </p>
@@ -721,11 +739,11 @@ SELECT SLEEP(60);`}
 
           <SpacerLine>
             <div>
-              <h4 className="text-xl font-semibold mb-3 mt-4">Frontend Implementation</h4>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Frontend implementation</h4>
               
               <div className="space-y-4">
                 <div>
-                  <h5 className="text-lg font-semibold mt-4 mb-3">Cancellation Survey</h5>
+                  <h5 className="text-lg font-semibold mt-4 mb-3">Cancellation survey</h5>
                   <p>
                     Users enter the flow from <strong>Settings → Manage Subscription</strong>.
                   </p>
@@ -745,7 +763,7 @@ SELECT SLEEP(60);`}
 
                 <SpacerLine>
                   <div>
-                    <h5 className="text-lg font-semibold mt-4 mb-3">Retention Screens</h5>
+                    <h5 className="text-lg font-semibold mt-4 mb-3">Retention screens</h5>
                     <p>
                       I implemented multiple retention paths, each <strong>guarded by eligibility checks</strong>:
                     </p>
@@ -767,7 +785,7 @@ SELECT SLEEP(60);`}
 
           <SpacerLine>
             <div>
-              <h4 className="text-xl font-semibold mb-3 mt-4">State and Analytics</h4>
+              <h4 className="text-xl font-semibold mb-3 mt-4">State and analytics</h4>
               <p>
                 I implemented <strong>centralized state</strong> to track:
               </p>
@@ -784,7 +802,7 @@ SELECT SLEEP(60);`}
 
           <SpacerLine>
             <div>
-              <h4 className="text-xl font-semibold mb-3 mt-4">Backend: Cancellation as Infrastructure</h4>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Backend: cancellation as infrastructure</h4>
               <p>
                 All cancellation paths funnel into a <strong>single method</strong>:
               </p>
@@ -810,7 +828,7 @@ SELECT SLEEP(60);`}
 
           <SpacerLine>
             <div>
-              <h4 className="text-xl font-semibold mb-3 mt-4">Stripe and Lifecycle Consistency</h4>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Stripe and lifecycle consistency</h4>
               <p>
                 <code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">Stripe</code> webhooks update subscription state and trigger cancellation emails only when cancellation is newly set.
               </p>
@@ -827,7 +845,7 @@ SELECT SLEEP(60);`}
 
           <SpacerLine>
             <div>
-              <h4 className="text-xl font-semibold mb-3 mt-4">Why This Matters</h4>
+              <h4 className="text-xl font-semibold mb-3 mt-4">Why this matters</h4>
               <p>
                 This project reflects how I operate as a <strong>senior product engineer</strong>:
               </p>
@@ -852,7 +870,7 @@ SELECT SLEEP(60);`}
         <h1 className="mb-8 text-2xl font-semibold tracking-tighter">Technical Deep Dives</h1>
         <div className="space-y-0">
           {projects.map((project, index) => (
-            <div key={index} className={index > 0 ? 'border-t border-black dark:border-white pt-8 mt-8' : ''}>
+            <div key={index} className={index > 0 ? 'border-t border-black dark:border-white py-6 my-4' : 'py-6'}>
               <ProjectSection
                 title={project.title}
                 skills={project.skills}
