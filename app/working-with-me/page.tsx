@@ -15,11 +15,11 @@ export default function WorkingWithMe() {
           Owning and building revenue-critical systems
         </p>
         
-        <p className="mb-12 text-neutral-700 dark:text-neutral-300">
+        <p className="mb-16 text-neutral-700 dark:text-neutral-300">
           I build <strong>backend-first product systems</strong> for early-stage startups. I do my best work owning <strong>meaningful problems end-to-end</strong>, balancing <strong>speed with correctness</strong>, and helping teams scale both their systems and their engineering culture.
         </p>
 
-          <div className="mb-12 pt-8 border-t border-neutral-200 dark:border-neutral-800">
+          <div className="mb-16 pt-8 border-t border-neutral-200 dark:border-neutral-800">
             <h3 className="mb-3 text-lg font-semibold text-neutral-800 dark:text-neutral-200">
               Non-negotiables
             </h3>
@@ -75,7 +75,7 @@ export default function WorkingWithMe() {
             </div>
           </div>
           
-          <div className="mb-12 mt-16 pt-8 border-t border-neutral-200 dark:border-neutral-800">
+          <div className="mb-16 pt-8 border-t border-neutral-200 dark:border-neutral-800">
             <h3 className="mb-6 text-xl font-semibold text-neutral-900 dark:text-neutral-100">
               My approach
             </h3>
@@ -98,7 +98,7 @@ export default function WorkingWithMe() {
             </div>
           </div>
 
-          <div className="mb-10 mt-20 pt-8 border-t border-neutral-200 dark:border-neutral-800">
+          <div className="mb-16 pt-8 border-t border-neutral-200 dark:border-neutral-800">
             <h3 className="mb-5 text-2xl font-semibold text-neutral-900 dark:text-neutral-100">
               Your team may be a good fit for me if:
             </h3>
@@ -124,7 +124,7 @@ export default function WorkingWithMe() {
             </div>
           </div>
 
-          <div className="mt-20 md:mt-24 pt-8 border-t border-neutral-200 dark:border-neutral-800">
+          <div className="pt-8 border-t border-neutral-200 dark:border-neutral-800">
             <p className="text-lg md:text-xl text-neutral-700 dark:text-neutral-300">
               If this resonates, let's talk. Reach out with a brief overview of what you're building and the problems you're looking to solve.
             </p>
