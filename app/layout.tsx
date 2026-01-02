@@ -54,7 +54,7 @@ export default function RootLayout({
       )}
     >
       <body className="antialiased mt-8 flex flex-col min-h-screen">
-        <main className="mt-6 flex flex-col flex-1 pb-20 md:pb-0">
+        <main className="mt-6 flex flex-col flex-1 pb-20 md:pb-0 px-10 sm:px-12 md:px-16 lg:px-[20vw] xl:px-[20vw]">
           <Navbar />
           {children}
           <Footer />

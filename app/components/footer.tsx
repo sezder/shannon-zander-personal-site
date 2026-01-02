@@ -4,7 +4,7 @@ import { SocialLinkItems } from './social-link-items'
 
 export default function Footer() {
   return (
-    <footer className="mt-auto mb-16 px-10 sm:px-12 md:px-16 lg:px-[20vw] xl:px-[20vw] md:relative">
+    <footer className="mt-auto mb-16 md:relative">
       <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-black border-t border-neutral-200 dark:border-neutral-800 py-4 flex flex-row gap-3 justify-center z-10">
         <SocialLinkItems tooltipPosition="top" />
       </div>

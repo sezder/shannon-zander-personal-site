@@ -22,17 +22,25 @@ function AwardIcon({ children }: { children: React.ReactNode }) {
 type Role = {
   title: string
   date: string
+  impact?: string
 }
 
-function RoleItem({ title, date, isLast = false, isSingleRole = false }: Role & { isLast?: boolean; isSingleRole?: boolean }) {
+function RoleItem({ title, date, impact, isLast = false, isSingleRole = false }: Role & { isLast?: boolean; isSingleRole?: boolean }) {
   return (
-    <div className={`pl-14 ${isLast && !isSingleRole ? 'pt-0.5 pb-1.5' : isSingleRole ? 'py-0.5' : 'py-1.5'}`}>
-      <p className="text-sm text-neutral-900 dark:text-neutral-100">
-        <span className="font-medium">{title}</span>
-      </p>
-      <p className={`text-xs text-neutral-400 dark:text-neutral-500 ${isSingleRole ? 'mt-0' : 'mt-0.5'}`}>
-        {date}
-      </p>
+    <div className={`${isLast && !isSingleRole ? 'pt-1 pb-2' : isSingleRole ? 'py-1' : 'py-1.5'}`}>
+      <div className="flex items-center justify-between gap-4">
+        <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+          {title}
+        </p>
+        <p className="text-xs text-neutral-500 dark:text-neutral-500 flex-shrink-0">
+          {date}
+        </p>
+      </div>
+      {impact && (
+        <p className="text-xs font-medium text-neutral-600 dark:text-neutral-400 mt-2 leading-relaxed">
+          {impact}
+        </p>
+      )}
     </div>
   )
 }
@@ -48,21 +56,20 @@ function CompanyExperience({
 }) {
   const isSingleRole = roles.length === 1
   return (
-    <div className={`bg-white dark:bg-neutral-900 rounded-lg ${isSingleRole ? 'py-2 px-3' : 'p-3'}`}>
-      <div className="flex items-center gap-3 mb-1">
+    <div className={`${isSingleRole ? 'py-2' : 'py-3'}`}>
+      <div className="flex items-center gap-3 mb-3">
         <CompanyIcon>{icon}</CompanyIcon>
-        <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold text-neutral-950 dark:text-neutral-50">
-            {company}
-          </p>
-        </div>
+        <p className="text-base font-bold text-neutral-950 dark:text-neutral-50">
+          {company}
+        </p>
       </div>
       <div>
         {roles.map((role, index) => (
           <RoleItem 
             key={index} 
             title={role.title} 
-            date={role.date} 
+            date={role.date}
+            impact={role.impact}
             isLast={index === roles.length - 1}
             isSingleRole={isSingleRole}
           />
@@ -127,21 +134,21 @@ export default function Page() {
             </h1>
           </div>
           <p className="mb-4">
-            I'm a software engineer focused on <strong>billing systems, data migrations, and production safety at scale</strong>.
+            I'm a software engineer who builds and evolves <strong>revenue-critical billing systems</strong>, prioritizing <strong>correctness and production safety</strong>.
           </p>
           <p className="mb-4">
-            Currently, I work on <strong>subscriptions and payments infrastructure</strong>, where I own revenue-critical systems, large historical data migrations, and cross-database schema evolution under live production traffic.
+            I currently own <strong>subscriptions and payments infrastructure</strong>, including <strong>large-scale data migrations</strong> and <strong>cross-database schema evolution</strong> under <strong>live traffic</strong>.
           </p>
         </SectionContainer>
       </section>
       
-      <section className="w-screen mt-8">
-        <div className="bg-section-bg dark:bg-neutral-950 py-6 md:py-8">
-          <SectionContainer className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-            <div className="flex flex-col h-full">
-              <h2 className="text-2xl font-semibold mb-6 mt-2 text-neutral-900 dark:text-neutral-100">
-                Working experience
-              </h2>
+      <section className="mt-8">
+        <SectionContainer>
+          <div className="flex flex-col gap-8">
+              <div className="flex flex-col">
+                <h2 className="text-2xl font-semibold mb-6 mt-2 text-neutral-900 dark:text-neutral-100">
+                  Working experience
+                </h2>
               <div className="space-y-3 flex-1">
                 <CompanyExperience
                   icon={
@@ -157,9 +164,14 @@ export default function Page() {
                   }
                   company="KeeperTax"
                   roles={[
-                    { title: 'Software Engineer II', date: 'May 2024 - Current' }
+                    { 
+                      title: 'Software Engineer II', 
+                      date: 'May 2024 – Present',
+                      impact: 'Owned the subscriptions and billing domain, leading revenue-critical Stripe migrations, large-scale production data backfills, and cross-database schema evolution supporting 1.39M+ users.'
+                    }
                   ]}
                 />
+                <div className="mt-12"></div>
                 <CompanyExperience
                   icon={
                     <Image
@@ -174,18 +186,26 @@ export default function Page() {
                   }
                   company="Revere CRE"
                   roles={[
-                    { title: 'Software Engineer', date: 'Jan 2023 - April 2024' },
-                    { title: 'Junior Software Engineer', date: 'May 2022 - Dec 2022' }
+                    { 
+                      title: 'Software Engineer', 
+                      date: 'Jan 2023 – Apr 2024',
+                      impact: 'Built backend-heavy product systems at scale, designing data pipelines and infrastructure to support a 52k+ user platform processing $26B+ in transactions.'
+                    },
+                    { 
+                      title: 'Junior Software Engineer', 
+                      date: 'May 2022 – Dec 2022',
+                      impact: 'Promoted to mid-level engineer within 8 months based on consistent delivery and technical growth.'
+                    }
                   ]}
                 />
               </div>
             </div>
             
-            <div className="flex flex-col h-full">
+            <div className="flex flex-col">
               <h2 className="text-2xl font-semibold mb-6 mt-2 text-neutral-900 dark:text-neutral-100">
                 Awards & Recognition
               </h2>
-              <div className="space-y-2 flex-1 lg:space-y-0 lg:flex lg:flex-col lg:justify-between">
+              <div className="space-y-2">
                 <AwardItem
                   icon={
                     <Image
@@ -237,10 +257,11 @@ export default function Page() {
                 />
               </div>
             </div>
-          </SectionContainer>
-          <SectionContainer className="mt-8">
-            <div>
-              <h2 className="mb-6 text-xl font-semibold tracking-tight">Skills</h2>
+          </div>
+        </SectionContainer>
+      <SectionContainer className="mt-8">
+        <div>
+          <h2 className="mb-6 text-xl font-semibold tracking-tight">Skills</h2>
               <div className="space-y-5">
                 <div>
                   <p className="mb-2 text-xs md:text-sm text-neutral-400 dark:text-neutral-500">
@@ -301,8 +322,7 @@ export default function Page() {
                 </div>
               </div>
             </div>
-          </SectionContainer>
-        </div>
+        </SectionContainer>
       </section>
     </>
   )
