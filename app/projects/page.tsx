@@ -9,7 +9,7 @@ import { SpacerLine } from '../components/spacer-line'
 function ChevronIcon({ isOpen }: { isOpen: boolean }) {
   return (
     <svg
-      className={`w-5 h-5 transition-transform duration-300 ease-in-out ${isOpen ? 'rotate-180' : ''}`}
+      className={`w-5 h-5 transition-transform duration-150 ease-in-out ${isOpen ? 'rotate-180' : ''}`}
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -41,13 +41,13 @@ function ProjectSection({
     <div className="bg-white dark:bg-neutral-900 rounded-lg">
       <button
         onClick={onToggle}
-        className={`w-full flex items-center justify-between text-left cursor-pointer transition-all duration-300 ease-in-out border-l-[3px] ${
+        className={`w-full flex items-center justify-between text-left cursor-pointer transition-all duration-150 ease-in-out border-l-[3px] ${
           isOpen 
             ? 'border-black dark:border-white pl-[calc(1rem+3px)] pr-4 py-4' 
             : 'border-transparent p-4 hover:bg-neutral-50 dark:hover:bg-neutral-800'
         }`}
       >
-        <h3 className={`text-lg transition-all duration-300 ${
+        <h3 className={`text-lg transition-all duration-150 ${
           isOpen 
             ? 'text-neutral-900 dark:text-neutral-100 font-bold' 
             : 'text-neutral-700 dark:text-neutral-300 font-semibold'
@@ -57,13 +57,13 @@ function ProjectSection({
         <ChevronIcon isOpen={isOpen} />
       </button>
       <div
-        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+        className={`overflow-hidden transition-all duration-150 ease-in-out ${
           isOpen
             ? 'max-h-[10000px] opacity-100 translate-y-0'
             : 'max-h-0 opacity-0 -translate-y-2'
         }`}
       >
-        <div className={`pb-4 pr-4 pl-[calc(1rem+3px)] text-neutral-700 dark:text-neutral-300 border-l-[3px] transition-colors duration-300 ease-in-out ${
+        <div className={`pb-4 pr-4 pl-[calc(1rem+3px)] text-neutral-700 dark:text-neutral-300 border-l-[3px] transition-colors duration-150 ease-in-out ${
           isOpen 
             ? 'border-black dark:border-white' 
             : 'border-transparent'

@@ -9,7 +9,7 @@ import { SpacerLine } from '../components/spacer-line'
 function ChevronIcon({ isOpen }: { isOpen: boolean }) {
   return (
     <svg
-      className={`w-5 h-5 transition-transform duration-300 ease-in-out ${isOpen ? 'rotate-180' : ''}`}
+      className={`w-5 h-5 transition-transform duration-150 ease-in-out ${isOpen ? 'rotate-180' : ''}`}
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -38,36 +38,32 @@ function ProjectSection({
   children: React.ReactNode
 }) {
   return (
-    <div className="bg-white dark:bg-neutral-900 rounded-lg">
+    <div className="bg-white dark:bg-black rounded-lg relative">
+      {/* Animated border line */}
+      <div
+        className={`absolute left-0 top-0 w-[1px] bg-black dark:bg-white origin-top transition-transform duration-150 ease-in-out ${
+          isOpen ? 'scale-y-100' : 'scale-y-0'
+        }`}
+        style={{ height: '100%' }}
+      />
+      
       <button
         onClick={onToggle}
-        className={`w-full flex items-center justify-between text-left cursor-pointer transition-all duration-300 ease-in-out border-l-[3px] ${
-          isOpen 
-            ? 'border-black dark:border-white pl-[calc(1rem+3px)] pr-4 py-4' 
-            : 'border-transparent p-4 hover:bg-neutral-50 dark:hover:bg-neutral-800'
-        }`}
+        className="w-full flex items-center justify-between text-left cursor-pointer transition-all duration-150 ease-in-out pl-[calc(1rem+1px)] pr-4 py-4"
       >
-        <h3 className={`text-lg transition-all duration-300 ${
-          isOpen 
-            ? 'text-neutral-900 dark:text-neutral-100 font-bold' 
-            : 'text-neutral-700 dark:text-neutral-300 font-semibold'
-        }`}>
+        <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 transition-colors duration-150">
           {title}
         </h3>
         <ChevronIcon isOpen={isOpen} />
       </button>
       <div
-        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+        className={`overflow-hidden transition-all duration-150 ease-in-out ${
           isOpen
             ? 'max-h-[10000px] opacity-100 translate-y-0'
             : 'max-h-0 opacity-0 -translate-y-2'
         }`}
       >
-        <div className={`pb-4 pr-4 pl-[calc(1rem+3px)] text-neutral-700 dark:text-neutral-300 border-l-[3px] transition-colors duration-300 ease-in-out ${
-          isOpen 
-            ? 'border-black dark:border-white' 
-            : 'border-transparent'
-        }`}>
+        <div className="pb-4 pr-4 pl-[calc(1rem+1px)] text-neutral-700 dark:text-neutral-300">
           {skills && skills.length > 0 && (
             <div className="flex flex-wrap gap-1.5 mb-4">
               {skills.map((skill, index) => (
@@ -146,7 +142,20 @@ function ImageCarousel() {
 }
 
 export default function ProjectsPage() {
-  const [openSections, setOpenSections] = useState<Set<number>>(new Set([0]))
+  const [openSections, setOpenSections] = useState<Set<number>>(new Set())
+
+  // Load persisted open sections from localStorage on mount
+  useEffect(() => {
+    const stored = localStorage.getItem('technical-deep-dives-open-sections')
+    if (stored) {
+      try {
+        const indices = JSON.parse(stored) as number[]
+        setOpenSections(new Set(indices))
+      } catch (e) {
+        // If parsing fails, start with empty set
+      }
+    }
+  }, [])
 
   const toggleSection = (index: number) => {
     const newOpenSections = new Set(openSections)
@@ -156,6 +165,8 @@ export default function ProjectsPage() {
       newOpenSections.add(index)
     }
     setOpenSections(newOpenSections)
+    // Persist to localStorage
+    localStorage.setItem('technical-deep-dives-open-sections', JSON.stringify(Array.from(newOpenSections)))
   }
 
   const projects = [
