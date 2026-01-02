@@ -111,12 +111,18 @@ export default function Page() {
       <section>
         <SectionContainer>
           <div className="flex items-center gap-4 mb-8">
-            <div className="w-16 h-16 rounded-full bg-neutral-200 dark:bg-neutral-800 flex items-center justify-center flex-shrink-0">
-              <div className="w-[60px] h-[60px] rounded-full bg-neutral-300 dark:bg-neutral-700 flex items-center justify-center">
-                <span className="text-neutral-500 dark:text-neutral-400 text-xs">Photo</span>
-              </div>
+            <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0 border-2 border-black dark:border-white relative">
+              <Image
+                src="/Shannon-Zander-062-Print.jpg"
+                alt="Shannon Zander"
+                width={80}
+                height={80}
+                className="w-full h-full object-cover"
+                style={{ objectPosition: 'center top', transform: 'translateY(5px)' }}
+                priority
+              />
             </div>
-            <h1 className="text-2xl md:text-3xl font-semibold tracking-tighter">
+            <h1 className="text-3xl md:text-4xl font-semibold tracking-tighter">
               Shannon Zander
             </h1>
           </div>
