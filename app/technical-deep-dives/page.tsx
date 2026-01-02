@@ -38,7 +38,9 @@ function ProjectSection({
   children: React.ReactNode
 }) {
   return (
-    <div className="bg-white dark:bg-black rounded-lg relative">
+    <div 
+      className="bg-white dark:bg-black rounded-lg relative"
+    >
       {/* Animated border line */}
       <div
         className={`absolute left-0 top-0 w-[1px] bg-black dark:bg-white origin-top transition-transform duration-150 ease-in-out ${
@@ -47,15 +49,15 @@ function ProjectSection({
         style={{ height: '100%' }}
       />
       
-      <button
+      <div 
         onClick={onToggle}
-        className="w-full flex items-center justify-between text-left cursor-pointer transition-all duration-150 ease-in-out pl-[calc(1rem+1px)] pr-4 py-4"
+        className="w-full flex items-center justify-between text-left transition-all duration-150 ease-in-out pl-[calc(1rem+1px)] pr-4 py-4 cursor-pointer"
       >
         <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 transition-colors duration-150">
           {title}
         </h3>
         <ChevronIcon isOpen={isOpen} />
-      </button>
+      </div>
       <div
         className={`overflow-hidden transition-all duration-150 ease-in-out ${
           isOpen
@@ -63,7 +65,10 @@ function ProjectSection({
             : 'max-h-0 opacity-0 -translate-y-2'
         }`}
       >
-        <div className="pb-4 pr-4 pl-[calc(1rem+1px)] text-neutral-700 dark:text-neutral-300">
+        <div 
+          className="pb-4 pr-4 pl-[calc(1rem+1px)] text-neutral-700 dark:text-neutral-300"
+          onClick={(e) => e.stopPropagation()}
+        >
           {skills && skills.length > 0 && (
             <div className="flex flex-wrap gap-1.5 mb-4">
               {skills.map((skill, index) => (
@@ -883,7 +888,10 @@ SELECT SLEEP(60);`}
         <h1 className="mb-8 text-2xl md:text-3xl font-semibold tracking-tighter">Technical Deep Dives</h1>
         <div className="space-y-0">
           {projects.map((project, index) => (
-            <div key={index} className={index > 0 ? 'border-t border-black dark:border-white py-6 my-4' : 'py-6'}>
+            <div 
+              key={index} 
+              className={index > 0 ? 'border-t-[0.5px] border-black dark:border-white py-6 my-4' : 'py-6'}
+            >
               <ProjectSection
                 title={project.title}
                 skills={project.skills}
