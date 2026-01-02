@@ -52,7 +52,7 @@ export function Navbar() {
               )
             })}
           </div>
-          <div className="hidden md:flex items-center gap-2 opacity-60 hover:opacity-100 focus-within:opacity-100 transition-opacity">
+          <div className="hidden md:flex items-center gap-2">
             <SocialLinkItems 
               tooltipPosition="top"
               variant="navbar"

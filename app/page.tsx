@@ -3,10 +3,8 @@ import { SectionContainer } from './components/section-container'
 
 function CompanyIcon({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-10 h-10 rounded-lg bg-neutral-200/50 dark:bg-neutral-800/50 flex items-center justify-center flex-shrink-0">
-      <div className="w-9 h-9 rounded-lg bg-white dark:bg-neutral-900 flex items-center justify-center p-1">
-        {children}
-      </div>
+    <div className="w-[42px] h-[42px] rounded-full flex items-center justify-center flex-shrink-0 border-[0.5px] border-black dark:border-white p-0.5">
+      {children}
     </div>
   )
 }
@@ -28,16 +26,14 @@ type Role = {
 function RoleItem({ title, date, impact, isLast = false, isSingleRole = false }: Role & { isLast?: boolean; isSingleRole?: boolean }) {
   return (
     <div className={`${isLast && !isSingleRole ? 'pt-1 pb-2' : isSingleRole ? 'py-1' : 'py-1.5'}`}>
-      <div className="flex items-center justify-between gap-4">
-        <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
-          {title}
-        </p>
-        <p className="text-xs text-neutral-500 dark:text-neutral-500 flex-shrink-0">
-          {date}
-        </p>
-      </div>
+      <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+        {title}
+      </p>
+      <p className={`text-xs text-neutral-500 dark:text-neutral-500 ${isSingleRole ? 'mt-0.5' : 'mt-1'}`}>
+        {date}
+      </p>
       {impact && (
-        <p className="text-xs font-medium text-neutral-600 dark:text-neutral-400 mt-2 leading-relaxed">
+        <p className="text-xs font-normal text-neutral-600 dark:text-neutral-400 mt-2 leading-relaxed">
           {impact}
         </p>
       )}
@@ -125,7 +121,7 @@ export default function Page() {
                 width={80}
                 height={80}
                 className="w-full h-full object-cover"
-                style={{ objectPosition: 'center top', transform: 'translateY(5px)' }}
+                style={{ objectPosition: 'center center' }}
                 priority
               />
             </div>
@@ -157,7 +153,7 @@ export default function Page() {
                       alt="KeeperTax logo"
                       width={32}
                       height={32}
-                      className="object-contain w-full h-full"
+                      className="object-cover w-full h-full rounded-full scale-110"
                       priority
                       sizes="32px"
                     />
@@ -177,11 +173,11 @@ export default function Page() {
                     <Image
                       src="/revere-cre-icon.png"
                       alt="Revere CRE icon"
-                      width={32}
-                      height={32}
-                      className="object-contain w-full h-full"
+                      width={36}
+                      height={36}
+                      className="object-cover w-full h-full rounded-full scale-110"
                       priority
-                      sizes="32px"
+                      sizes="36px"
                     />
                   }
                   company="Revere CRE"

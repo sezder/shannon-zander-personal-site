@@ -38,7 +38,7 @@ export function SocialLinkItems({ tooltipPosition = 'right', linkClassName = '',
     : 'absolute bottom-full mb-3 px-2 py-1 text-xs font-medium text-white bg-neutral-900 dark:bg-neutral-100 dark:text-neutral-900 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 group-focus:opacity-100 pointer-events-none transition-opacity'
 
   const baseLinkClasses = isNavbar
-    ? "group relative w-8 h-8 flex items-center justify-center transition-opacity"
+    ? "group relative w-8 h-8 flex items-center justify-center opacity-60 hover:opacity-100 focus-within:opacity-100 transition-opacity"
     : "group relative w-10 h-10 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex items-center justify-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
 
   const iconClasses = isNavbar
