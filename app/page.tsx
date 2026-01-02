@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { SectionContainer } from './components/section-container'
+import { text } from './types/typography'
 
 function CompanyIcon({ children }: { children: React.ReactNode }) {
   return (
@@ -26,14 +27,14 @@ type Role = {
 function RoleItem({ title, date, impact, isLast = false, isSingleRole = false }: Role & { isLast?: boolean; isSingleRole?: boolean }) {
   return (
     <div className={`${isLast && !isSingleRole ? 'pt-1 pb-2' : isSingleRole ? 'py-1' : 'py-1.5'}`}>
-      <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+      <p className={text({ role: 'roleTitle', tone: 'default' })}>
         {title}
       </p>
-      <p className={`text-xs text-neutral-500 dark:text-neutral-500 ${isSingleRole ? 'mt-0.5' : 'mt-1'}`}>
+      <p className={`${text({ role: 'meta', tone: 'subtle' })} ${isSingleRole ? 'mt-0.5' : 'mt-1'}`}>
         {date}
       </p>
       {impact && (
-        <p className="text-xs font-normal text-neutral-600 dark:text-neutral-400 mt-2 leading-relaxed">
+        <p className={`${text({ role: 'impact', tone: 'muted' })} mt-2`}>
           {impact}
         </p>
       )}
@@ -55,7 +56,7 @@ function CompanyExperience({
     <div className={`${isSingleRole ? 'py-2' : 'py-3'}`}>
       <div className="flex items-center gap-3 mb-3">
         <CompanyIcon>{icon}</CompanyIcon>
-        <p className="text-base font-bold text-neutral-950 dark:text-neutral-50">
+        <p className={text({ role: 'company', tone: 'default' })}>
           {company}
         </p>
       </div>
@@ -94,10 +95,10 @@ function AwardItem({
         <div className="flex items-center gap-3 w-full">
           <AwardIcon>{icon}</AwardIcon>
           <div className="flex-1 min-w-0">
-            <p className="text-sm text-neutral-900 dark:text-neutral-100">
-              {title} at <strong className="font-semibold text-neutral-950 dark:text-neutral-50">{organization}</strong>
+            <p className={text({ role: 'body', tone: 'default' })}>
+              {title} at <strong className={text({ role: 'bodyStrong', tone: 'default' })}>{organization}</strong>
             </p>
-            <p className="text-xs text-neutral-400 dark:text-neutral-500 mt-0.5">
+            <p className={`${text({ role: 'meta', tone: 'subtle' })} mt-0.5`}>
               {date}
             </p>
           </div>
@@ -125,15 +126,15 @@ export default function Page() {
                 priority
               />
             </div>
-            <h1 className="text-3xl md:text-4xl font-semibold tracking-tighter">
+            <h1 className={text({ role: 'pageTitle' })}>
               Shannon Zander
             </h1>
           </div>
-          <p className="mb-4">
-            I'm a software engineer who builds and evolves <strong>revenue-critical billing systems</strong>, prioritizing <strong>correctness and production safety</strong>.
+          <p className={`mb-4 ${text({ role: 'body', tone: 'muted' })}`}>
+            I'm a software engineer who builds and evolves <strong className={text({ role: 'bodyStrong', tone: 'default' })}>revenue-critical billing systems</strong>, prioritizing <strong className={text({ role: 'bodyStrong', tone: 'default' })}>correctness and production safety</strong>.
           </p>
-          <p className="mb-4">
-            I currently own <strong>subscriptions and payments infrastructure</strong>, including <strong>large-scale data migrations</strong> and <strong>cross-database schema evolution</strong> under <strong>live traffic</strong>.
+          <p className={`mb-4 ${text({ role: 'body', tone: 'muted' })}`}>
+            I currently own <strong className={text({ role: 'bodyStrong', tone: 'default' })}>subscriptions and payments infrastructure</strong>, including <strong className={text({ role: 'bodyStrong', tone: 'default' })}>large-scale data migrations</strong> and <strong className={text({ role: 'bodyStrong', tone: 'default' })}>cross-database schema evolution</strong> under <strong className={text({ role: 'bodyStrong', tone: 'default' })}>live traffic</strong>.
           </p>
         </SectionContainer>
       </section>
@@ -142,7 +143,7 @@ export default function Page() {
         <SectionContainer>
           <div className="flex flex-col gap-8">
               <div className="flex flex-col">
-                <h2 className="text-2xl font-semibold mb-6 mt-2 text-neutral-900 dark:text-neutral-100">
+                <h2 className={`${text({ role: 'sectionTitle', tone: 'default' })} mb-6 mt-2`}>
                   Working experience
                 </h2>
               <div className="space-y-3 flex-1">
@@ -198,7 +199,7 @@ export default function Page() {
             </div>
             
             <div className="flex flex-col">
-              <h2 className="text-2xl font-semibold mb-6 mt-2 text-neutral-900 dark:text-neutral-100">
+              <h2 className={`${text({ role: 'sectionTitle', tone: 'default' })} mb-6 mt-2`}>
                 Awards & Recognition
               </h2>
               <div className="space-y-2">
@@ -257,20 +258,20 @@ export default function Page() {
         </SectionContainer>
       <SectionContainer className="mt-8">
         <div>
-          <h2 className="mb-6 text-xl font-semibold tracking-tight">Skills</h2>
+          <h2 className={`mb-6 ${text({ role: 'subsectionTitle' })}`}>Skills</h2>
               <div className="space-y-5">
                 <div>
-                  <p className="mb-2 text-xs md:text-sm text-neutral-400 dark:text-neutral-500">
+                  <p className={`mb-2 ${text({ role: 'caption', tone: 'subtle' })}`}>
                     Backend-first product engineer with deep experience in data-heavy systems and billing infrastructure.
                   </p>
-                  <h3 className="mb-1.5 text-xs md:text-sm font-semibold text-neutral-700 dark:text-neutral-300">
+                  <h3 className={`mb-1.5 ${text({ role: 'label', tone: 'muted' })}`}>
                     Primary Languages
                   </h3>
                   <div className="flex flex-col md:flex-row md:flex-wrap gap-0 md:gap-1.5">
                     {['TypeScript', 'SQL', 'React', 'GraphQL (Relay)'].map((skill, index) => (
                       <div key={skill} className="md:contents">
                         <span
-                          className={`block md:inline-block px-2 py-0 md:py-1 text-sm ${index === 0 ? 'font-normal text-neutral-700 dark:text-neutral-300' : 'font-normal text-neutral-500 dark:text-neutral-400'}`}
+                          className={`block md:inline-block px-2 py-0 md:py-1 ${text({ role: 'body', tone: index === 0 ? 'muted' : 'subtle' })}`}
                         >
                           {skill}
                         </span>
@@ -279,14 +280,14 @@ export default function Page() {
                   </div>
                 </div>
                 <div>
-                  <h3 className="mb-1.5 text-xs md:text-sm font-semibold text-neutral-700 dark:text-neutral-300">
+                  <h3 className={`mb-1.5 ${text({ role: 'label', tone: 'muted' })}`}>
                     Infrastructure & Data
                   </h3>
                   <div className="flex flex-col md:flex-row md:flex-wrap gap-0 md:gap-1.5">
                     {['GCP', 'Terraform', 'Cloud SQL', 'BigQuery'].map((skill, index) => (
                       <div key={skill} className="md:contents">
                         <span
-                          className={`block md:inline-block px-2 py-0 md:py-1 text-sm ${index === 0 ? 'font-normal text-neutral-700 dark:text-neutral-300' : 'font-normal text-neutral-500 dark:text-neutral-400'}`}
+                          className={`block md:inline-block px-2 py-0 md:py-1 ${text({ role: 'body', tone: index === 0 ? 'muted' : 'subtle' })}`}
                         >
                           {skill}
                         </span>
@@ -295,14 +296,14 @@ export default function Page() {
                   </div>
                 </div>
                 <div>
-                  <h3 className="mb-1.5 text-xs md:text-sm font-semibold text-neutral-700 dark:text-neutral-300">
+                  <h3 className={`mb-1.5 ${text({ role: 'label', tone: 'muted' })}`}>
                     Product Domains
                   </h3>
                   <div className="flex flex-col md:flex-row md:flex-wrap gap-0 md:gap-1.5">
                     {['Stripe Billing', 'High-volume Production Data Migrations'].map((skill, index) => (
                       <div key={skill} className="md:contents">
                         <span
-                          className={`block md:inline-block px-2 py-0 md:py-1 text-sm ${index === 0 ? 'font-normal text-neutral-700 dark:text-neutral-300' : 'font-normal text-neutral-500 dark:text-neutral-400'}`}
+                          className={`block md:inline-block px-2 py-0 md:py-1 ${text({ role: 'body', tone: index === 0 ? 'muted' : 'subtle' })}`}
                         >
                           {skill === 'High-volume Production Data Migrations' ? (
                             <>
