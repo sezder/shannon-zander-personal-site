@@ -38,7 +38,7 @@ function SectionHeading({
       className={`mb-3 ${text({ role: 'subsectionTitle', tone: 'default' })} scroll-mt-8 group cursor-pointer`}
       onClick={handleClick}
     >
-      <span className="hover:underline">{children}</span>
+      <span>{children}</span>
       {id && (
         <span className="ml-2 text-neutral-400 dark:text-neutral-600 opacity-0 group-hover:opacity-100 transition-opacity">
           #

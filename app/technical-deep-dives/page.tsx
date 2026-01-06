@@ -80,7 +80,7 @@ function ProjectSection({
           className={`${text({ role: 'sectionHeader', tone: 'default' })} transition-colors duration-150 group`}
           onClick={handleTitleClick}
         >
-          <span className="hover:underline">{title}</span>
+          <span>{title}</span>
           {id && (
             <span className="ml-2 text-neutral-400 dark:text-neutral-600 opacity-0 group-hover:opacity-100 transition-opacity">
               #
