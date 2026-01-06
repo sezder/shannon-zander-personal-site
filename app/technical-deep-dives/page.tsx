@@ -7,6 +7,14 @@ import { CodeBlock } from '../components/code-block'
 import { SpacerLine } from '../components/spacer-line'
 import { text } from '../types/typography'
 
+// Generate URL-friendly slug from title
+function slugify(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
 function ChevronIcon({ isOpen }: { isOpen: boolean }) {
   return (
     <svg
@@ -31,16 +39,30 @@ function ProjectSection({
   isOpen,
   onToggle,
   children,
+  id,
 }: {
   title: string
   skills?: string[]
   isOpen: boolean
   onToggle: () => void
   children: React.ReactNode
+  id?: string
 }) {
+  const handleTitleClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (id) {
+      const url = `${window.location.origin}${window.location.pathname}#${id}`
+      navigator.clipboard.writeText(url).catch(() => {
+        // Fallback if clipboard API fails - just update hash
+        window.location.hash = id
+      })
+    }
+  }
+
   return (
     <div 
-      className="bg-white dark:bg-black rounded-lg relative"
+      id={id}
+      className="bg-white dark:bg-black rounded-lg relative scroll-mt-8"
     >
       {/* Animated border line */}
       <div
@@ -54,8 +76,16 @@ function ProjectSection({
         onClick={onToggle}
         className="w-full flex items-center justify-between text-left transition-all duration-150 ease-in-out pl-[calc(1rem+1px)] pr-4 py-4 cursor-pointer"
       >
-        <h3 className={`${text({ role: 'sectionHeader', tone: 'default' })} transition-colors duration-150`}>
-          {title}
+        <h3 
+          className={`${text({ role: 'sectionHeader', tone: 'default' })} transition-colors duration-150 group`}
+          onClick={handleTitleClick}
+        >
+          <span className="hover:underline">{title}</span>
+          {id && (
+            <span className="ml-2 text-neutral-400 dark:text-neutral-600 opacity-0 group-hover:opacity-100 transition-opacity">
+              #
+            </span>
+          )}
         </h3>
         <ChevronIcon isOpen={isOpen} />
       </div>
@@ -150,18 +180,46 @@ function ImageCarousel() {
 export default function ProjectsPage() {
   const [openSections, setOpenSections] = useState<Set<number>>(new Set())
 
-  // Load persisted open sections from localStorage on mount
+  // Load persisted open sections from localStorage and handle hash navigation on mount
   useEffect(() => {
+    // Load persisted open sections
     const stored = localStorage.getItem('technical-deep-dives-open-sections')
+    let initialOpenSections = new Set<number>()
     if (stored) {
       try {
         const indices = JSON.parse(stored) as number[]
-        setOpenSections(new Set(indices))
+        initialOpenSections = new Set(indices)
       } catch (e) {
         // If parsing fails, start with empty set
       }
     }
-  }, [])
+
+    // Handle hash-based navigation
+    const hash = window.location.hash.slice(1) // Remove the #
+    if (hash) {
+      // Find the project index by matching the slug
+      const projectIndex = projects.findIndex(
+        (p, idx) => !p.hidden && slugify(p.title) === hash
+      )
+      
+      if (projectIndex !== -1) {
+        // Add the hashed project to open sections
+        initialOpenSections.add(projectIndex)
+      }
+    }
+
+    setOpenSections(initialOpenSections)
+
+    // Scroll to hash after state is set and component renders
+    if (hash) {
+      setTimeout(() => {
+        const element = document.getElementById(hash)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 200)
+    }
+  }, []) // Only run on mount
 
   const toggleSection = (index: number) => {
     const newOpenSections = new Set(openSections)
@@ -893,6 +951,7 @@ SELECT SLEEP(60);`}
           {projects.map((project, originalIndex) => {
             if (project.hidden) return null
             const visibleIndex = projects.slice(0, originalIndex).filter(p => !p.hidden).length
+            const projectSlug = slugify(project.title)
             return (
               <div 
                 key={originalIndex} 
@@ -903,6 +962,7 @@ SELECT SLEEP(60);`}
                   skills={project.skills}
                   isOpen={openSections.has(originalIndex)}
                   onToggle={() => toggleSection(originalIndex)}
+                  id={projectSlug}
                 >
                   {project.content}
                 </ProjectSection>

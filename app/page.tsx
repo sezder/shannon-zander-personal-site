@@ -1,6 +1,85 @@
+'use client'
+
+import { useEffect } from 'react'
 import Image from 'next/image'
 import { SectionContainer } from './components/section-container'
 import { text } from './types/typography'
+
+// Generate URL-friendly slug from text
+function slugify(str: string): string {
+  return str
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
+// Section heading component with anchor link
+function SectionHeading({ 
+  children, 
+  id 
+}: { 
+  children: React.ReactNode
+  id?: string 
+}) {
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (id) {
+      const url = `${window.location.origin}${window.location.pathname}#${id}`
+      navigator.clipboard.writeText(url).catch(() => {
+        window.location.hash = id
+      })
+    }
+  }
+
+  return (
+    <h2 
+      id={id}
+      className={`${text({ role: 'sectionTitle', tone: 'default' })} mb-6 mt-2 scroll-mt-8 group cursor-pointer`}
+      onClick={handleClick}
+    >
+      <span className="hover:underline">{children}</span>
+      {id && (
+        <span className="ml-2 text-neutral-400 dark:text-neutral-600 opacity-0 group-hover:opacity-100 transition-opacity">
+          #
+        </span>
+      )}
+    </h2>
+  )
+}
+
+// Subsection heading component with anchor link
+function SubsectionHeading({ 
+  children, 
+  id 
+}: { 
+  children: React.ReactNode
+  id?: string 
+}) {
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (id) {
+      const url = `${window.location.origin}${window.location.pathname}#${id}`
+      navigator.clipboard.writeText(url).catch(() => {
+        window.location.hash = id
+      })
+    }
+  }
+
+  return (
+    <h2 
+      id={id}
+      className={`mb-6 ${text({ role: 'subsectionTitle' })} scroll-mt-8 group cursor-pointer`}
+      onClick={handleClick}
+    >
+      <span className="hover:underline">{children}</span>
+      {id && (
+        <span className="ml-2 text-neutral-400 dark:text-neutral-600 opacity-0 group-hover:opacity-100 transition-opacity">
+          #
+        </span>
+      )}
+    </h2>
+  )
+}
 
 function CompanyIcon({ children }: { children: React.ReactNode }) {
   return (
@@ -107,6 +186,19 @@ function AwardItem({
 }
 
 export default function Page() {
+  // Handle hash-based navigation on page load
+  useEffect(() => {
+    const hash = window.location.hash.slice(1)
+    if (hash) {
+      setTimeout(() => {
+        const element = document.getElementById(hash)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 100)
+    }
+  }, [])
+
   return (
     <>
       <section>
@@ -140,9 +232,9 @@ export default function Page() {
         <SectionContainer>
           <div className="flex flex-col gap-8">
               <div className="flex flex-col">
-                <h2 className={`${text({ role: 'sectionTitle', tone: 'default' })} mb-6 mt-2`}>
+                <SectionHeading id={slugify('Working experience')}>
                   Working experience
-                </h2>
+                </SectionHeading>
               <div className="space-y-3 flex-1">
                 <CompanyExperience
                   icon={
@@ -196,9 +288,9 @@ export default function Page() {
             </div>
             
             <div className="flex flex-col pt-8 border-t border-neutral-200 dark:border-neutral-800">
-              <h2 className={`${text({ role: 'sectionTitle', tone: 'default' })} mb-6 mt-2`}>
+              <SectionHeading id={slugify('Awards & Recognition')}>
                 Awards & Recognition
-              </h2>
+              </SectionHeading>
               <div className="space-y-2">
                 <AwardItem
                   icon={
@@ -255,7 +347,7 @@ export default function Page() {
         </SectionContainer>
       <SectionContainer className="mt-8">
         <div className="pt-8 border-t border-neutral-200 dark:border-neutral-800">
-          <h2 className={`mb-6 ${text({ role: 'subsectionTitle' })}`}>Skills</h2>
+          <SubsectionHeading id={slugify('Skills')}>Skills</SubsectionHeading>
               <div className="space-y-5">
                 <div>
                   <p className={`mb-2 ${text({ role: 'caption', tone: 'subtle' })}`}>

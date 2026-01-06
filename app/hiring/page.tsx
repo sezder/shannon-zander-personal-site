@@ -1,11 +1,67 @@
 'use client'
 
+import { useEffect } from 'react'
 import { SectionContainer } from '../components/section-container'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRocket, faGlobe, faBriefcase } from '@fortawesome/free-solid-svg-icons'
 import { text } from '../types/typography'
 
+// Generate URL-friendly slug from text
+function slugify(str: string): string {
+  return str
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
+// Section heading component with anchor link
+function SectionHeading({ 
+  children, 
+  id 
+}: { 
+  children: React.ReactNode
+  id?: string 
+}) {
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (id) {
+      const url = `${window.location.origin}${window.location.pathname}#${id}`
+      navigator.clipboard.writeText(url).catch(() => {
+        window.location.hash = id
+      })
+    }
+  }
+
+  return (
+    <h3 
+      id={id}
+      className={`mb-3 ${text({ role: 'subsectionTitle', tone: 'default' })} scroll-mt-8 group cursor-pointer`}
+      onClick={handleClick}
+    >
+      <span className="hover:underline">{children}</span>
+      {id && (
+        <span className="ml-2 text-neutral-400 dark:text-neutral-600 opacity-0 group-hover:opacity-100 transition-opacity">
+          #
+        </span>
+      )}
+    </h3>
+  )
+}
+
 export default function WorkingWithMe() {
+  // Handle hash-based navigation on page load
+  useEffect(() => {
+    const hash = window.location.hash.slice(1)
+    if (hash) {
+      setTimeout(() => {
+        const element = document.getElementById(hash)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 100)
+    }
+  }, [])
+
   return (
     <section>
       <SectionContainer>
@@ -22,9 +78,9 @@ export default function WorkingWithMe() {
         </div>
 
           <div className="mb-16 pt-8 border-t border-neutral-200 dark:border-neutral-800">
-            <h3 className={`mb-3 ${text({ role: 'subsectionTitle', tone: 'default' })}`}>
+            <SectionHeading id={slugify('Non-negotiables')}>
               Non-negotiables
-            </h3>
+            </SectionHeading>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <div className="bg-white dark:bg-neutral-900 rounded-lg p-4 border border-neutral-200 dark:border-neutral-800 shadow-sm">
                 <div className="flex items-center gap-2 mb-2">
@@ -72,9 +128,9 @@ export default function WorkingWithMe() {
           </div>
           
           <div className="mb-16 pt-8 border-t border-neutral-200 dark:border-neutral-800">
-            <h3 className={`mb-5 ${text({ role: 'subsectionTitle', tone: 'default' })}`}>
+            <SectionHeading id={slugify('Your team may be a good fit for me if')}>
               Your team may be a good fit for me if
-            </h3>
+            </SectionHeading>
             <div className={`space-y-4 ${text({ role: 'body', tone: 'muted', leading: 'snug' })} max-w-3xl`}>
               <div>
                 <h4 className={`${text({ role: 'cardTitle', tone: 'default' })} mb-2`}>Low ego, high ownership</h4>
