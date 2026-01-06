@@ -671,6 +671,7 @@ SELECT SLEEP(60);`}
     {
       title: 'Revere Expansion of TAM by 300% through Investor Dashboard',
       skills: ['React', 'TypeScript', 'Data Visualization', 'Analytics'],
+      hidden: true,
       content: (
         <div className="space-y-4">
           <p>
@@ -685,6 +686,7 @@ SELECT SLEEP(60);`}
     {
       title: 'Relay Connections Handler',
       skills: ['GraphQL', 'Relay', 'TypeScript'],
+      hidden: true,
       content: (
         <div className="space-y-4">
           <p>
@@ -888,21 +890,25 @@ SELECT SLEEP(60);`}
       <SectionContainer>
         <h1 className={`mb-8 ${text({ role: 'pageTitleSmall' })}`}>Technical Deep Dives</h1>
         <div className="space-y-0">
-          {projects.map((project, index) => (
-            <div 
-              key={index} 
-              className={index > 0 ? 'border-t-[0.5px] border-black dark:border-white py-6 my-4' : 'py-6'}
-            >
-              <ProjectSection
-                title={project.title}
-                skills={project.skills}
-                isOpen={openSections.has(index)}
-                onToggle={() => toggleSection(index)}
+          {projects.map((project, originalIndex) => {
+            if (project.hidden) return null
+            const visibleIndex = projects.slice(0, originalIndex).filter(p => !p.hidden).length
+            return (
+              <div 
+                key={originalIndex} 
+                className={visibleIndex > 0 ? 'border-t-[0.5px] border-black dark:border-white py-6 my-4' : 'py-6'}
               >
-                {project.content}
-              </ProjectSection>
-            </div>
-          ))}
+                <ProjectSection
+                  title={project.title}
+                  skills={project.skills}
+                  isOpen={openSections.has(originalIndex)}
+                  onToggle={() => toggleSection(originalIndex)}
+                >
+                  {project.content}
+                </ProjectSection>
+              </div>
+            )
+          })}
         </div>
       </SectionContainer>
     </section>
