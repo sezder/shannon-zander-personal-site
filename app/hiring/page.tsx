@@ -28,9 +28,7 @@ export default function WorkingWithMe() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <div className="bg-white dark:bg-neutral-900 rounded-lg p-4 border border-neutral-200 dark:border-neutral-800 shadow-sm">
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-6 h-6 rounded-full border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 flex items-center justify-center flex-shrink-0">
-                    <FontAwesomeIcon icon={faRocket} className="w-3 h-3 text-neutral-500 dark:text-neutral-400" />
-                  </div>
+                  <FontAwesomeIcon icon={faRocket} className="w-3 h-3 text-neutral-500 dark:text-neutral-400 flex-shrink-0" />
                   <h4 className={text({ role: 'cardTitle', tone: 'default' })}>
                     Early-stage startups
                   </h4>
@@ -44,9 +42,7 @@ export default function WorkingWithMe() {
               </div>
               <div className="bg-white dark:bg-neutral-900 rounded-lg p-4 border border-neutral-200 dark:border-neutral-800 shadow-sm">
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-6 h-6 rounded-full border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 flex items-center justify-center flex-shrink-0">
-                    <FontAwesomeIcon icon={faGlobe} className="w-3 h-3 text-neutral-500 dark:text-neutral-400" />
-                  </div>
+                  <FontAwesomeIcon icon={faGlobe} className="w-3 h-3 text-neutral-500 dark:text-neutral-400 flex-shrink-0" />
                   <h4 className={text({ role: 'cardTitle', tone: 'default' })}>
                     Remote only
                   </h4>
@@ -60,9 +56,7 @@ export default function WorkingWithMe() {
               </div>
               <div className="bg-white dark:bg-neutral-900 rounded-lg p-4 border border-neutral-200 dark:border-neutral-800 shadow-sm">
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-6 h-6 rounded-full border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 flex items-center justify-center flex-shrink-0">
-                    <FontAwesomeIcon icon={faBriefcase} className="w-3 h-3 text-neutral-500 dark:text-neutral-400" />
-                  </div>
+                  <FontAwesomeIcon icon={faBriefcase} className="w-3 h-3 text-neutral-500 dark:text-neutral-400 flex-shrink-0" />
                   <h4 className={text({ role: 'cardTitle', tone: 'default' })}>
                     Full-time with equity
                   </h4>

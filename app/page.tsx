@@ -4,7 +4,7 @@ import { text } from './types/typography'
 
 function CompanyIcon({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-[42px] h-[42px] rounded-full flex items-center justify-center flex-shrink-0 border-[0.5px] border-black dark:border-white p-0.5">
+    <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 border-[0.5px] border-black dark:border-white p-0.5">
       {children}
     </div>
   )
@@ -27,11 +27,9 @@ type Role = {
 function RoleItem({ title, date, impact, isLast = false, isSingleRole = false }: Role & { isLast?: boolean; isSingleRole?: boolean }) {
   return (
     <div className={`${isLast && !isSingleRole ? 'pt-1 pb-2' : isSingleRole ? 'py-1' : 'py-1.5'}`}>
-      <p className={text({ role: 'roleTitle', tone: 'default' })}>
-        {title}
-      </p>
-      <p className={`${text({ role: 'meta', tone: 'subtle' })} ${isSingleRole ? 'mt-0.5' : 'mt-1'}`}>
-        {date}
+      <p className={`flex justify-between items-center ${text({ role: 'roleTitle', tone: 'default' })}`}>
+        <span>{title}</span>
+        <span className={text({ role: 'meta', tone: 'subtle' })}>{date}</span>
       </p>
       {impact && (
         <p className={`${text({ role: 'impact', tone: 'muted' })} mt-2`}>
@@ -104,7 +102,6 @@ function AwardItem({
           </div>
         </div>
       </div>
-      {!isLast && <div className="h-px bg-neutral-200 dark:bg-neutral-800" />}
     </>
   )
 }
@@ -115,7 +112,7 @@ export default function Page() {
       <section>
         <SectionContainer>
           <div className="flex items-center gap-4 mb-8">
-            <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0 border-2 border-black dark:border-white relative">
+            <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0 border border-black dark:border-white relative">
               <Image
                 src="/Shannon-Zander-062-Print.jpg"
                 alt="Shannon Zander"
@@ -152,11 +149,11 @@ export default function Page() {
                     <Image
                       src="/keepertax-logo.png"
                       alt="KeeperTax logo"
-                      width={32}
-                      height={32}
+                      width={28}
+                      height={28}
                       className="object-cover w-full h-full rounded-full scale-110"
                       priority
-                      sizes="32px"
+                      sizes="28px"
                     />
                   }
                   company="KeeperTax"
@@ -174,11 +171,11 @@ export default function Page() {
                     <Image
                       src="/revere-cre-icon.png"
                       alt="Revere CRE icon"
-                      width={36}
-                      height={36}
+                      width={28}
+                      height={28}
                       className="object-cover w-full h-full rounded-full scale-110"
                       priority
-                      sizes="36px"
+                      sizes="28px"
                     />
                   }
                   company="Revere CRE"
@@ -198,7 +195,7 @@ export default function Page() {
               </div>
             </div>
             
-            <div className="flex flex-col">
+            <div className="flex flex-col pt-8 border-t border-neutral-200 dark:border-neutral-800">
               <h2 className={`${text({ role: 'sectionTitle', tone: 'default' })} mb-6 mt-2`}>
                 Awards & Recognition
               </h2>
@@ -257,7 +254,7 @@ export default function Page() {
           </div>
         </SectionContainer>
       <SectionContainer className="mt-8">
-        <div>
+        <div className="pt-8 border-t border-neutral-200 dark:border-neutral-800">
           <h2 className={`mb-6 ${text({ role: 'subsectionTitle' })}`}>Skills</h2>
               <div className="space-y-5">
                 <div>
